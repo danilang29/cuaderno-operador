@@ -1,0 +1,4573 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found]){display:none!important}</style></head><body>
+<title>Cuaderno del Operador</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#f3f5f2;
+  --surface:#ffffff;
+  --surface-2:#e9ede9;
+  --line:#d5dbd6;
+  --line-strong:#b9c2bb;
+  --ink:#16211b;
+  --ink-2:#5c6a63;
+  --ink-3:#8b978f;
+  --accent:#178a47;
+  --accent-ink:#ffffff;
+  --accent-soft:#dff2e6;
+  --danger:#c43d3d;
+  --shadow:0 1px 2px rgba(22,33,27,.06),0 8px 24px rgba(22,33,27,.08);
+  --s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--s5:#e87ba4;--s6:#008300;--s7:#4a3aa7;--s8:#e34948;
+  --display:"Barlow Condensed","Arial Narrow","Helvetica Neue",Arial,sans-serif;
+  --body:"IBM Plex Sans","Segoe UI",Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0f1411;--surface:#171e19;--surface-2:#1f2823;--line:#2a352e;--line-strong:#3a4740;
+    --ink:#e8efea;--ink-2:#a3b0a8;--ink-3:#6f7c75;
+    --accent:#3fcb7c;--accent-ink:#0b1a10;--accent-soft:#1a3324;--danger:#f07070;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+    --s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--s8:#e66767;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0f1411;--surface:#171e19;--surface-2:#1f2823;--line:#2a352e;--line-strong:#3a4740;
+  --ink:#e8efea;--ink-2:#a3b0a8;--ink-3:#6f7c75;
+  --accent:#3fcb7c;--accent-ink:#0b1a10;--accent-soft:#1a3324;--danger:#f07070;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+  --s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--s8:#e66767;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:14px;line-height:1.5;min-height:100vh}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- header ---------- */
+.top{position:sticky;top:0;z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.top-in{max-width:1180px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:10px}
+.brand h1{margin:0;font-family:var(--display);font-weight:700;font-size:26px;letter-spacing:.01em;text-transform:uppercase;line-height:1}
+.brand .sub{color:var(--ink-3);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.season{display:flex;align-items:center;gap:6px;margin-left:auto}
+.season label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.season select{background:var(--surface-2);border:1px solid var(--line);border-radius:4px;padding:6px 10px;font-family:var(--display);font-size:18px;font-weight:600}
+.btn{border:1px solid var(--line-strong);background:var(--surface);border-radius:4px;padding:7px 12px;font-weight:500;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.btn:hover{background:var(--surface-2)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-family:var(--display);font-size:17px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;padding:6px 14px}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.small{padding:4px 8px;font-size:12px}
+.btn.danger{color:var(--danger);border-color:var(--danger)}
+.badge{background:var(--accent);color:var(--accent-ink);border-radius:999px;font-size:11px;font-weight:600;padding:0 6px;line-height:16px}
+.next{color:var(--accent);font-weight:500;text-transform:uppercase;font-size:11px;letter-spacing:.06em}
+.status{font-size:12px;color:var(--ink-3);display:flex;align-items:center;gap:6px}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--ink-3);display:inline-block}
+.status.ok i{background:var(--accent)}
+
+/* ---------- page ---------- */
+.wrap{max-width:1180px;margin:0 auto;padding:20px}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px 10px}
+.tile .k{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.tile .v{font-family:var(--display);font-size:40px;font-weight:700;line-height:1;margin-top:4px}
+.tile .v small{font-size:18px;color:var(--ink-3);font-weight:600;margin-left:6px}
+.tile .d{font-size:12px;color:var(--ink-3);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.apply{background:var(--accent-soft);border:1px solid var(--accent);border-radius:6px;padding:12px 14px;margin-bottom:18px}
+.apply h3{margin:0 0 6px;font-family:var(--display);font-size:20px;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.apply p{margin:0 0 10px;font-size:13px;color:var(--ink-2)}
+.apply ul{list-style:none;margin:0 0 12px;padding:0;display:flex;flex-direction:column;gap:3px;font-size:13px}
+.apply ul b{font-family:var(--display);font-size:15px}
+.apply .acts2{display:flex;gap:8px;flex-wrap:wrap}
+
+.filters{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line-strong);background:var(--surface);border-radius:999px;padding:4px 10px 4px 8px;font-size:13px;display:inline-flex;align-items:center;gap:6px}
+.chip i{width:9px;height:9px;border-radius:2px;background:var(--c,var(--ink-3));display:inline-block}
+.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip .n{color:var(--ink-3);font-size:11px}
+.chip.on .n{color:inherit;opacity:.7}
+.ctl{background:var(--surface);border:1px solid var(--line-strong);border-radius:4px;padding:6px 10px;min-width:150px}
+.ctl::placeholder{color:var(--ink-3)}
+.link{background:none;border:0;color:var(--ink-2);text-decoration:underline;padding:4px;font-size:13px}
+
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:18px;align-items:start}
+aside{position:sticky;top:76px;display:flex;flex-direction:column;gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px}
+.card h3{margin:0 0 8px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+
+/* ---------- month chart ---------- */
+.chart{position:relative;height:120px}
+.chart svg{width:100%;height:100%;display:block;overflow:visible}
+.chart .bar{fill:var(--accent);rx:3}
+.chart .bar.dim{fill:var(--surface-2);stroke:var(--line);stroke-width:1}
+.chart .hit{fill:transparent;cursor:default}
+.chart .hit:hover + .bar{filter:brightness(1.15)}
+.chart text{font-family:var(--body);font-size:10px;fill:var(--ink-3)}
+.chart text.val{fill:var(--ink-2);font-family:var(--display);font-size:12px;font-weight:600}
+.chart .base{stroke:var(--line-strong);stroke-width:1}
+.chart .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12px;padding:4px 8px;border-radius:4px;white-space:nowrap;transform:translate(-50%,-110%);display:none}
+.teams{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.teams li{display:flex;align-items:center;gap:8px}
+.teams button{background:none;border:0;padding:2px 0;text-align:left;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink)}
+.teams button:hover{color:var(--accent);text-decoration:underline}
+.teams .bar{height:6px;background:var(--accent);border-radius:2px;opacity:.85}
+.teams .cnt{font-family:var(--display);font-weight:600;font-size:15px;width:22px;text-align:right;color:var(--ink-2)}
+
+/* ---------- match list ---------- */
+.month{margin-bottom:22px}
+.month h2{margin:0 0 6px;font-family:var(--display);font-size:18px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-2);display:flex;align-items:baseline;gap:8px}
+.month h2 span{font-size:13px;color:var(--ink-3);font-family:var(--body);text-transform:none;letter-spacing:0;font-weight:400}
+.rows{background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.row{display:grid;grid-template-columns:58px 1fr auto;gap:0 14px;align-items:center;padding:10px 14px;border-top:1px solid var(--line);position:relative}
+.row:first-child{border-top:0}
+.row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--c,var(--line-strong))}
+.date{text-align:center;line-height:1.05}
+.date b{display:block;font-family:var(--display);font-size:26px;font-weight:700}
+.date span{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3)}
+.match{min-width:0}
+.score{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:22px;font-weight:600;line-height:1.1;flex-wrap:wrap}
+.score .t{background:none;border:0;padding:0;font:inherit;color:inherit;text-align:left}
+.score .t:hover{color:var(--accent)}
+.score .r{background:var(--ink);color:var(--bg);padding:1px 8px;border-radius:3px;font-size:18px;letter-spacing:.1em;min-width:52px;text-align:center}
+.score .r.na{background:var(--surface-2);color:var(--ink-3);letter-spacing:.2em}
+.meta{display:flex;gap:6px 14px;flex-wrap:wrap;font-size:12px;color:var(--ink-2);margin-top:3px}
+.meta .comp{display:inline-flex;align-items:center;gap:5px;font-weight:500;color:var(--ink)}
+.meta .comp i{width:9px;height:9px;border-radius:2px;background:var(--c,var(--ink-3))}
+.meta .note{color:var(--ink-3);font-style:italic}
+.acts{display:flex;gap:4px;opacity:0;transition:opacity .15s}
+.row:hover .acts,.row:focus-within .acts{opacity:1}
+@media (prefers-reduced-motion:reduce){.acts{transition:none}}
+.empty{padding:40px 20px;text-align:center;color:var(--ink-3);background:var(--surface);border:1px dashed var(--line-strong);border-radius:6px}
+.empty b{display:block;font-family:var(--display);font-size:22px;color:var(--ink-2);font-weight:600;margin-bottom:4px}
+
+/* ---------- dialog ---------- */
+dialog{border:0;border-radius:8px;padding:0;background:var(--surface);color:var(--ink);box-shadow:var(--shadow);width:min(560px,calc(100vw - 32px))}
+dialog::backdrop{background:rgba(10,20,14,.5)}
+.dlg-h{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.dlg-h h2{margin:0;font-family:var(--display);font-size:22px;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.dlg-b{padding:16px 18px;display:grid;grid-template-columns:1fr 1fr;gap:12px 14px}
+.f{display:flex;flex-direction:column;gap:4px}
+.f.full{grid-column:1/-1}
+.f label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.f input,.f select,.f textarea{background:var(--bg);border:1px solid var(--line-strong);border-radius:4px;padding:7px 9px}
+.f textarea{resize:vertical;min-height:54px}
+.vs{grid-column:1/-1;display:grid;grid-template-columns:1fr 64px 24px 64px 1fr;gap:8px;align-items:end}
+.vs .dash{text-align:center;padding-bottom:9px;color:var(--ink-3);font-family:var(--display);font-size:18px}
+.vs input[type=number]{text-align:center;font-family:var(--display);font-size:20px;font-weight:600;padding:4px}
+.dlg-f{padding:12px 18px;border-top:1px solid var(--line);display:flex;gap:8px;justify-content:flex-end}
+.err{grid-column:1/-1;color:var(--danger);font-size:13px;display:none}
+.err.show{display:block}
+
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:4px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:9}
+.toast.show{opacity:1}
+
+@media (max-width:860px){
+  .tiles{grid-template-columns:repeat(2,1fr)}
+  .grid{grid-template-columns:1fr}
+  aside{position:static}
+  .top-in{gap:10px}
+  .season{margin-left:0}
+}
+@media (max-width:520px){
+  .row{grid-template-columns:48px 1fr;gap:0 10px}
+  .acts{grid-column:1/-1;opacity:1;justify-content:flex-end;margin-top:6px}
+  .score{font-size:18px}
+  .dlg-b{grid-template-columns:1fr}
+  .vs{grid-template-columns:1fr 54px 20px 54px 1fr}
+}
+</style>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand">
+      <h1>Cuaderno del Operador</h1>
+      <span class="sub">Partidos realizados</span>
+    </div>
+    <div class="season">
+      <label for="season">Temporada</label>
+      <select id="season"></select>
+    </div>
+    <span class="status" id="status"><i></i><span>Conectando…</span></span>
+    <button class="btn" id="refreshBtn" hidden title="Copiar la lista de partidos jugados sin resultado para pedírselos a Claude">↻ Resultados <span class="badge" id="refreshN"></span></button>
+    <button class="btn" id="exportBtn" hidden title="Descargar CSV de la temporada">CSV</button>
+    <button class="btn primary" id="addBtn">+ Añadir partido</button>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="tiles" id="tiles"></section>
+
+  <section class="apply" id="apply" hidden></section>
+
+  <section class="filters">
+    <div class="chips" id="compChips"></div>
+    <select class="ctl" id="monthSel"><option value="">Todos los meses</option></select>
+    <input class="ctl" id="teamQ" type="search" placeholder="Buscar equipo…" autocomplete="off">
+    <button class="link" id="clearBtn" hidden>Limpiar filtros</button>
+  </section>
+
+  <div class="grid">
+    <section id="list"></section>
+    <aside>
+      <div class="card">
+        <h3>Partidos por mes</h3>
+        <div class="chart" id="chart"></div>
+      </div>
+      <div class="card">
+        <h3>Equipos más repetidos</h3>
+        <ul class="teams" id="teams"></ul>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<dialog id="dlg">
+  <form method="dialog" id="form" novalidate>
+    <div class="dlg-h"><h2 id="dlgTitle">Nuevo partido</h2><button type="button" class="btn small" id="closeBtn">Cerrar</button></div>
+    <div class="dlg-b">
+      <div class="f"><label for="fFecha">Fecha</label><input type="date" id="fFecha" required></div>
+      <div class="f"><label for="fHora">Hora</label><input type="time" id="fHora"></div>
+      <div class="f"><label for="fComp">Competición</label><input id="fComp" list="compList" required placeholder="LaLiga EA Sports"></div>
+      <div class="f"><label for="fJornada">Jornada / ronda</label><input id="fJornada" placeholder="J3, Octavos…"></div>
+      <div class="vs">
+        <div class="f"><label for="fLocal">Local</label><input id="fLocal" list="teamList" required></div>
+        <div class="f"><label for="fGL">Goles</label><input type="number" id="fGL" min="0" placeholder="–"></div>
+        <div class="dash">–</div>
+        <div class="f"><label for="fGV">Goles</label><input type="number" id="fGV" min="0" placeholder="–"></div>
+        <div class="f"><label for="fVisit">Visitante</label><input id="fVisit" list="teamList" placeholder="vacío si es un evento"></div>
+      </div>
+      <div class="f"><label for="fSede">Estadio / sede</label><input id="fSede" list="sedeList"></div>
+      <div class="f"><label for="fPuesto">Puesto / función</label><input id="fPuesto" list="puestoList" placeholder="EVS, cámara, sonido…"></div>
+      <div class="f full"><label for="fNotas">Notas</label><textarea id="fNotas" placeholder="Incidencias, compañeros, algo que recordar…"></textarea></div>
+      <div class="err" id="err"></div>
+    </div>
+    <div class="dlg-f">
+      <button type="button" class="btn danger" id="delBtn" hidden>Eliminar</button>
+      <button type="submit" class="btn primary" id="saveBtn">Guardar</button>
+    </div>
+  </form>
+</dialog>
+<datalist id="compList"></datalist>
+<datalist id="teamList"></datalist>
+<datalist id="sedeList"></datalist>
+<datalist id="puestoList"></datalist>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+'use strict';
+const $=s=>document.querySelector(s);
+const MESES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const MES3=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+const DIAS=['dom','lun','mar','mié','jue','vie','sáb'];
+const SEASON_ORDER=[6,7,8,9,10,11,0,1,2,3,4,5]; // julio → junio
+const COMP_KNOWN=['LaLiga EA Sports','LaLiga Hypermotion','Copa del Rey','Supercopa de España','Champions League','Europa League','Conference League','Primera Federación','Amistoso'];
+const COMP_SLOT={'LaLiga EA Sports':1,'LaLiga Hypermotion':2,'Copa del Rey':3,'Supercopa de España':5,'Champions League':7,'Europa League':4,'Conference League':6,'Primera Federación':8};
+const TEAMS_SEED=['Real Madrid','FC Barcelona','Atlético de Madrid','Athletic Club','Villarreal','Real Betis','Real Sociedad','Sevilla','Valencia','Celta de Vigo','Rayo Vallecano','Osasuna','Getafe','Mallorca','Alavés','Girona','Espanyol','Levante','Elche','Real Oviedo','Almería','Cádiz','Las Palmas','Valladolid','Sporting de Gijón','Racing de Santander','Deportivo de La Coruña','Málaga','Zaragoza','Burgos','Eibar','Huesca','Leganés','Córdoba','Granada','Albacete','Mirandés','Castellón','Ceuta','Cultural Leonesa','Real Sociedad B','Andorra'];
+
+const norm=s=>(s||'').toString().normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().trim();
+const seasonOf=iso=>{const d=new Date(iso+'T00:00:00');const y=d.getFullYear();return d.getMonth()>=6?`${y}/${y+1}`:`${y-1}/${y}`;};
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+
+/* ---------- storage: db si está disponible, si no localStorage ---------- */
+const defaultMatches = [
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-20T19:13:48.142Z",
+    "fecha": "2026-09-19",
+    "gl": 1,
+    "gv": 2,
+    "hora": "18:30",
+    "id": "mua72rfyf5ibp0",
+    "jornada": "J6",
+    "local": "Eldense",
+    "notas": "",
+    "puesto": "",
+    "sede": "Pepico Amat",
+    "temporada": "2026/2027",
+    "visitante": "Eibar"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-20T19:15:06.436Z",
+    "fecha": "2026-09-19",
+    "gl": 1,
+    "gv": 2,
+    "hora": "21:00",
+    "id": "mua74fusei5irm",
+    "jornada": "J6",
+    "local": "Cádiz",
+    "notas": "",
+    "puesto": "",
+    "sede": "Nuevo Mirandilla",
+    "temporada": "2026/2027",
+    "visitante": "Girona"
+  },
+  {
+    "competicion": "Balonmano",
+    "creado": "2026-09-20T19:18:17.855Z",
+    "fecha": "2026-09-20",
+    "gl": null,
+    "gv": null,
+    "hora": "12:30",
+    "id": "mua78jjzdivue9",
+    "jornada": "",
+    "local": "Liga ASOBAL",
+    "notas": "",
+    "puesto": "",
+    "sede": "",
+    "temporada": "2026/2027",
+    "visitante": ""
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-20T19:19:20.589Z",
+    "fecha": "2026-09-20",
+    "gl": 1,
+    "gv": 0,
+    "hora": "14:00",
+    "id": "mua79vyl4bc7jw",
+    "jornada": "J7",
+    "local": "Getafe",
+    "notas": "",
+    "puesto": "",
+    "sede": "Coliseum",
+    "temporada": "2026/2027",
+    "visitante": "Málaga"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-21T15:47:30.993Z",
+    "fecha": "2026-09-26",
+    "gl": 1,
+    "gv": 1,
+    "hora": "18:30",
+    "id": "mubf5bu9k4b7s0",
+    "jornada": "J7",
+    "local": "Tenerife",
+    "notas": "",
+    "puesto": "",
+    "sede": "Heliodoro Rodríguez López",
+    "temporada": "2026/2027",
+    "visitante": "Cádiz"
+  },
+  {
+    "competicion": "Balonmano",
+    "creado": "2026-09-21T15:48:07.625Z",
+    "fecha": "2026-09-26",
+    "gl": null,
+    "gv": null,
+    "hora": "20:30",
+    "id": "mubf643tlz3u9l",
+    "jornada": "",
+    "local": "Liga ASOBAL",
+    "notas": "",
+    "puesto": "",
+    "sede": "",
+    "temporada": "2026/2027",
+    "visitante": ""
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-21T15:50:16.845Z",
+    "fecha": "2026-09-27",
+    "gl": 3,
+    "gv": 2,
+    "hora": "18:30",
+    "id": "mubf8vt9n72wwn",
+    "jornada": "J7",
+    "local": "Eibar",
+    "notas": "",
+    "puesto": "",
+    "sede": "Ipurua",
+    "temporada": "2026/2027",
+    "visitante": "Las Palmas"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-21T15:51:01.285Z",
+    "fecha": "2026-09-27",
+    "gl": 2,
+    "gv": 0,
+    "hora": "21:00",
+    "id": "mubf9u3ppiq6kn",
+    "jornada": "J7",
+    "local": "Real Oviedo",
+    "notas": "",
+    "puesto": "",
+    "sede": "Carlos Tartiere",
+    "temporada": "2026/2027",
+    "visitante": "Sporting de Gijón"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-21T15:51:33.326Z",
+    "fecha": "2026-09-28",
+    "gl": 0,
+    "gv": 2,
+    "hora": "20:30",
+    "id": "mubfaitqaguqew",
+    "jornada": "J7",
+    "local": "Leganés",
+    "notas": "",
+    "puesto": "",
+    "sede": "Butarque",
+    "temporada": "2026/2027",
+    "visitante": "Castellón"
+  },
+  {
+    "competicion": "UEFA Nations League",
+    "creado": "2026-09-21T15:53:27.266Z",
+    "fecha": "2026-09-29",
+    "gl": 4,
+    "gv": 1,
+    "hora": "20:45",
+    "id": "mubfcyqqsrlur3",
+    "jornada": "",
+    "local": "España",
+    "notas": "",
+    "puesto": "",
+    "sede": "Ramón Sánchez-Pizjuán",
+    "temporada": "2026/2027",
+    "visitante": "Croacia"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-30T15:26:48.022Z",
+    "fecha": "2026-10-03",
+    "gl": 0,
+    "gv": 0,
+    "hora": "18:30",
+    "id": "muo9dcrao8cket",
+    "jornada": "J8",
+    "local": "Sabadell",
+    "notas": "",
+    "puesto": "",
+    "sede": "Nova Creu Alta",
+    "temporada": "2026/2027",
+    "visitante": "Andorra"
+  },
+  {
+    "competicion": "Balonmano",
+    "creado": "2026-09-30T15:27:11.299Z",
+    "fecha": "2026-10-03",
+    "gl": null,
+    "gv": null,
+    "hora": "20:30",
+    "id": "muo9dupu4ffjfw",
+    "jornada": "",
+    "local": "Liga ASOBAL",
+    "notas": "",
+    "puesto": "",
+    "sede": "",
+    "temporada": "2026/2027",
+    "visitante": ""
+  },
+  {
+    "competicion": "Balonmano",
+    "creado": "2026-10-08T16:55:10.254Z",
+    "fecha": "2026-10-10",
+    "gl": null,
+    "gv": null,
+    "hora": "19:00",
+    "id": "muzs1tbh1c6b63",
+    "jornada": "",
+    "local": "Liga ASOBAL",
+    "notas": "",
+    "puesto": "",
+    "sede": "",
+    "temporada": "2026/2027",
+    "visitante": ""
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-10-08T16:57:45.327Z",
+    "fecha": "2026-10-10",
+    "gl": 4,
+    "gv": 1,
+    "hora": "21:00",
+    "id": "muzs54z30uc563",
+    "jornada": "J9",
+    "local": "Celta Fortuna",
+    "notas": "",
+    "puesto": "",
+    "sede": "Balaídos",
+    "temporada": "2026/2027",
+    "visitante": "Real Sociedad B"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-10-08T16:59:41.784Z",
+    "fecha": "2026-10-11",
+    "gl": 1,
+    "gv": 0,
+    "hora": "14:00",
+    "id": "muzs7mu08j7bzz",
+    "jornada": "J9",
+    "local": "Andorra",
+    "notas": "",
+    "puesto": "",
+    "sede": "Estadio de Encamp",
+    "temporada": "2026/2027",
+    "visitante": "Castellón"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-10-08T17:02:22.606Z",
+    "fecha": "2026-10-11",
+    "gl": 3,
+    "gv": 0,
+    "hora": "16:15",
+    "id": "muzsb2xal8w7ar",
+    "jornada": "J9",
+    "local": "Almería",
+    "notas": "",
+    "puesto": "",
+    "sede": "Power Horse Stadium",
+    "temporada": "2026/2027",
+    "visitante": "Leganés"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-10-08T17:02:47.060Z",
+    "fecha": "2026-10-12",
+    "gl": 1,
+    "gv": 1,
+    "hora": "21:00",
+    "id": "muzsblsklvgb1m",
+    "jornada": "J9",
+    "local": "Tenerife",
+    "notas": "",
+    "puesto": "",
+    "sede": "Heliodoro Rodríguez López",
+    "temporada": "2026/2027",
+    "visitante": "Girona"
+  },
+  {
+    "competicion": "Patinaje Artístico",
+    "creado": "2026-10-14T11:12:21.938Z",
+    "fecha": "2026-10-17",
+    "gl": null,
+    "gv": null,
+    "hora": "08:30",
+    "id": "mv80g2pevo865g",
+    "jornada": "",
+    "local": "Patinaje Artístico",
+    "notas": "",
+    "puesto": "",
+    "sede": "",
+    "temporada": "2026/2027",
+    "visitante": ""
+  },
+  {
+    "competicion": "Patinaje Artístico",
+    "creado": "2026-10-14T11:13:49.293Z",
+    "fecha": "2026-10-18",
+    "gl": null,
+    "gv": null,
+    "hora": "08:00",
+    "id": "mv80hy3xqj0q5d",
+    "jornada": "",
+    "local": "Patinaje Artístico",
+    "notas": "",
+    "puesto": "",
+    "sede": "",
+    "temporada": "2026/2027",
+    "visitante": ""
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-10-14T11:40:56.581Z",
+    "fecha": "2026-10-21",
+    "gl": 3,
+    "gv": 1,
+    "hora": "20:00",
+    "id": "mv81gtqc3nq2kh",
+    "jornada": "J6",
+    "local": "Levante",
+    "notas": "",
+    "puesto": "",
+    "sede": "Ciutat de València",
+    "temporada": "2026/2027",
+    "visitante": "Athletic Club"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-10-25T17:07:52.227Z",
+    "fecha": "2026-10-24",
+    "gl": 0,
+    "gv": 3,
+    "hora": "14:00",
+    "id": "mvo2zmldx5oup1",
+    "jornada": "J10",
+    "local": "Rayo Vallecano",
+    "notas": "",
+    "puesto": "",
+    "sede": "Estadio de Vallecas",
+    "temporada": "2026/2027",
+    "visitante": "Elche"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-10-25T17:09:25.825Z",
+    "fecha": "2026-10-24",
+    "gl": 2,
+    "gv": 1,
+    "hora": "16:15",
+    "id": "mvo31mtds8vrbb",
+    "jornada": "J10",
+    "local": "Racing de Santander",
+    "notas": "",
+    "puesto": "",
+    "sede": "El Sardinero",
+    "temporada": "2026/2027",
+    "visitante": "Espanyol"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-10-25T17:11:01.434Z",
+    "fecha": "2026-10-25",
+    "gl": 2,
+    "gv": 1,
+    "hora": "18:30",
+    "id": "mvo33ol5pd606n",
+    "jornada": "J10",
+    "local": "Real Sociedad",
+    "notas": "",
+    "puesto": "",
+    "sede": "Reale Arena",
+    "temporada": "2026/2027",
+    "visitante": "Levante"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-10-25T17:11:49.304Z",
+    "fecha": "2026-10-25",
+    "gl": 1,
+    "gv": 2,
+    "hora": "21:00",
+    "id": "mvo34piw3xs0nf",
+    "jornada": "J10",
+    "local": "FC Barcelona",
+    "notas": "EL CLÁSICO",
+    "puesto": "",
+    "sede": "Spotify Camp Nou",
+    "temporada": "2026/2027",
+    "visitante": "Real Madrid"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-10-25T17:17:37.793Z",
+    "fecha": "2026-10-26",
+    "gl": 2,
+    "gv": 0,
+    "hora": "21:00",
+    "id": "mvo3c6f5jf7mor",
+    "jornada": "J10",
+    "local": "Sevilla",
+    "notas": "",
+    "puesto": "",
+    "sede": "Ramón Sánchez-Pizjuán",
+    "temporada": "2026/2027",
+    "visitante": "Osasuna"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-10-28T18:28:25.313Z",
+    "fecha": "2026-10-30",
+    "gl": null,
+    "gv": null,
+    "hora": "21:00",
+    "id": "mvsg6rtt6fk4wo",
+    "jornada": "J11",
+    "local": "Villarreal",
+    "notas": "",
+    "puesto": "",
+    "sede": "Estadio de la Cerámica",
+    "temporada": "2026/2027",
+    "visitante": "Espanyol"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-10-28T18:30:02.866Z",
+    "fecha": "2026-10-31",
+    "gl": null,
+    "gv": null,
+    "hora": "16:15",
+    "id": "mvsg8v3mniqivf",
+    "jornada": "J11",
+    "local": "Rayo Vallecano",
+    "notas": "",
+    "puesto": "",
+    "sede": "Estadio de Vallecas",
+    "temporada": "2026/2027",
+    "visitante": "Celta de Vigo"
+  },
+  {
+    "competicion": "Balonmano",
+    "creado": "2026-10-28T18:30:30.119Z",
+    "fecha": "2026-10-31",
+    "gl": null,
+    "gv": null,
+    "hora": "20:00",
+    "id": "mvsg9g4nmsh2ah",
+    "jornada": "",
+    "local": "Liga ASOBAL",
+    "notas": "",
+    "puesto": "",
+    "sede": "",
+    "temporada": "2026/2027",
+    "visitante": ""
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-10-28T18:59:34.239Z",
+    "fecha": "2026-11-01",
+    "gl": null,
+    "gv": null,
+    "hora": "14:00",
+    "id": "mvshatwecc1qfi",
+    "jornada": "J11",
+    "local": "Getafe",
+    "notas": "",
+    "puesto": "",
+    "sede": "Coliseum",
+    "temporada": "2026/2027",
+    "visitante": "Sevilla"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-10-28T18:59:58.820Z",
+    "fecha": "2026-11-01",
+    "gl": null,
+    "gv": null,
+    "hora": "16:15",
+    "id": "mvshbcv8m6dj5i",
+    "jornada": "J11",
+    "local": "Racing de Santander",
+    "notas": "",
+    "puesto": "",
+    "sede": "El Sardinero",
+    "temporada": "2026/2027",
+    "visitante": "Real Madrid"
+  },
+  {
+    "competicion": "Champions League",
+    "creado": "2026-10-28T19:12:37.357Z",
+    "fecha": "2026-11-03",
+    "gl": null,
+    "gv": null,
+    "hora": "21:00",
+    "id": "mvshrm5oic5yb3",
+    "jornada": "",
+    "local": "Atlético de Madrid",
+    "notas": "",
+    "puesto": "",
+    "sede": "Riyadh Air Metropolitano",
+    "temporada": "2026/2027",
+    "visitante": "Bayern de Múnich"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.820Z",
+    "fecha": "2025-09-13",
+    "gl": 1,
+    "gv": 5,
+    "hora": "16:15",
+    "id": "p20250913-mirand-deport",
+    "jornada": "",
+    "local": "Mirandés",
+    "notas": "",
+    "puesto": "",
+    "sede": "Anduva",
+    "temporada": "2025/2026",
+    "visitante": "Deportivo de La Coruña"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.830Z",
+    "fecha": "2025-09-14",
+    "gl": 3,
+    "gv": 3,
+    "hora": "18:30",
+    "id": "p20250914-castel-ceuta",
+    "jornada": "",
+    "local": "Castellón",
+    "notas": "",
+    "puesto": "",
+    "sede": "Castalia",
+    "temporada": "2025/2026",
+    "visitante": "Ceuta"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.830Z",
+    "fecha": "2025-09-15",
+    "gl": 3,
+    "gv": 2,
+    "hora": "21:00",
+    "id": "p20250915-espany-mallor",
+    "jornada": "",
+    "local": "Espanyol",
+    "notas": "",
+    "puesto": "",
+    "sede": "RCDE Stadium",
+    "temporada": "2025/2026",
+    "visitante": "Mallorca"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.830Z",
+    "fecha": "2025-09-20",
+    "gl": 1,
+    "gv": 2,
+    "hora": "18:30",
+    "id": "p20250920-alaves-sevill",
+    "jornada": "",
+    "local": "Alavés",
+    "notas": "",
+    "puesto": "",
+    "sede": "Mendizorroza",
+    "temporada": "2025/2026",
+    "visitante": "Sevilla"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.830Z",
+    "fecha": "2025-09-20",
+    "gl": 2,
+    "gv": 1,
+    "hora": "21:00",
+    "id": "p20250920-almeri-sporti",
+    "jornada": "",
+    "local": "Almería",
+    "notas": "",
+    "puesto": "",
+    "sede": "Power Horse Stadium",
+    "temporada": "2025/2026",
+    "visitante": "Sporting de Gijón"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.830Z",
+    "fecha": "2025-09-21",
+    "gl": 2,
+    "gv": 0,
+    "hora": "16:15",
+    "id": "p20250921-albace-vallad",
+    "jornada": "",
+    "local": "Albacete",
+    "notas": "",
+    "puesto": "",
+    "sede": "Carlos Belmonte",
+    "temporada": "2025/2026",
+    "visitante": "Valladolid"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.830Z",
+    "fecha": "2025-09-21",
+    "gl": 0,
+    "gv": 1,
+    "hora": "18:30",
+    "id": "p20250921-malaga-cadiz",
+    "jornada": "",
+    "local": "Málaga",
+    "notas": "",
+    "puesto": "",
+    "sede": "La Rosaleda",
+    "temporada": "2025/2026",
+    "visitante": "Cádiz"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.830Z",
+    "fecha": "2025-09-24",
+    "gl": 1,
+    "gv": 0,
+    "hora": "21:30",
+    "id": "p20250924-realso-mallor",
+    "jornada": "",
+    "local": "Real Sociedad",
+    "notas": "",
+    "puesto": "",
+    "sede": "Reale Arena",
+    "temporada": "2025/2026",
+    "visitante": "Mallorca"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.830Z",
+    "fecha": "2025-09-25",
+    "gl": 1,
+    "gv": 3,
+    "hora": "21:30",
+    "id": "p20250925-realov-fcbarc",
+    "jornada": "",
+    "local": "Real Oviedo",
+    "notas": "",
+    "puesto": "",
+    "sede": "Carlos Tartiere",
+    "temporada": "2025/2026",
+    "visitante": "FC Barcelona"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.830Z",
+    "fecha": "2025-09-27",
+    "gl": 1,
+    "gv": 1,
+    "hora": "18:30",
+    "id": "p20250927-eibar-deport",
+    "jornada": "",
+    "local": "Eibar",
+    "notas": "",
+    "puesto": "",
+    "sede": "Ipurua",
+    "temporada": "2025/2026",
+    "visitante": "Deportivo de La Coruña"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.830Z",
+    "fecha": "2025-09-28",
+    "gl": 0,
+    "gv": 0,
+    "hora": "16:15",
+    "id": "p20250928-cadiz-ceuta",
+    "jornada": "",
+    "local": "Cádiz",
+    "notas": "",
+    "puesto": "",
+    "sede": "Nuevo Mirandilla",
+    "temporada": "2025/2026",
+    "visitante": "Ceuta"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.830Z",
+    "fecha": "2025-09-28",
+    "gl": 3,
+    "gv": 4,
+    "hora": "18:30",
+    "id": "p20250928-sporti-albace",
+    "jornada": "",
+    "local": "Sporting de Gijón",
+    "notas": "",
+    "puesto": "",
+    "sede": "El Molinón",
+    "temporada": "2025/2026",
+    "visitante": "Albacete"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.830Z",
+    "fecha": "2025-10-03",
+    "gl": 1,
+    "gv": 0,
+    "hora": "20:30",
+    "id": "p20251003-ceuta-eibar",
+    "jornada": "",
+    "local": "Ceuta",
+    "notas": "",
+    "puesto": "",
+    "sede": "Alfonso Murube",
+    "temporada": "2025/2026",
+    "visitante": "Eibar"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.830Z",
+    "fecha": "2025-10-04",
+    "gl": 2,
+    "gv": 1,
+    "hora": "18:30",
+    "id": "p20251004-athlet-mallor",
+    "jornada": "",
+    "local": "Athletic Club",
+    "notas": "",
+    "puesto": "",
+    "sede": "San Mamés",
+    "temporada": "2025/2026",
+    "visitante": "Mallorca"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-10-05",
+    "gl": 1,
+    "gv": 0,
+    "hora": "21:00",
+    "id": "p20251005-laspal-cadiz",
+    "jornada": "",
+    "local": "Las Palmas",
+    "notas": "",
+    "puesto": "",
+    "sede": "Gran Canaria",
+    "temporada": "2025/2026",
+    "visitante": "Cádiz"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-10-05",
+    "gl": 1,
+    "gv": 1,
+    "hora": "18:30",
+    "id": "p20251005-vallad-mirand",
+    "jornada": "",
+    "local": "Valladolid",
+    "notas": "",
+    "puesto": "",
+    "sede": "José Zorrilla",
+    "temporada": "2025/2026",
+    "visitante": "Mirandés"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-10-06",
+    "gl": 0,
+    "gv": 0,
+    "hora": "20:30",
+    "id": "p20251006-cultur-albace",
+    "jornada": "",
+    "local": "Cultural Leonesa",
+    "notas": "",
+    "puesto": "",
+    "sede": "Reino de León",
+    "temporada": "2025/2026",
+    "visitante": "Albacete"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-10-11",
+    "gl": 4,
+    "gv": 2,
+    "hora": "18:30",
+    "id": "p20251011-almeri-zarago",
+    "jornada": "",
+    "local": "Almería",
+    "notas": "",
+    "puesto": "",
+    "sede": "Power Horse Stadium",
+    "temporada": "2025/2026",
+    "visitante": "Zaragoza"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-10-11",
+    "gl": 0,
+    "gv": 0,
+    "hora": "16:15",
+    "id": "p20251011-mirand-legane",
+    "jornada": "",
+    "local": "Mirandés",
+    "notas": "",
+    "puesto": "",
+    "sede": "Anduva",
+    "temporada": "2025/2026",
+    "visitante": "Leganés"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-10-13",
+    "gl": 1,
+    "gv": 0,
+    "hora": "20:30",
+    "id": "p20251013-cordob-cultur",
+    "jornada": "",
+    "local": "Córdoba",
+    "notas": "",
+    "puesto": "",
+    "sede": "Nuevo Arcángel",
+    "temporada": "2025/2026",
+    "visitante": "Cultural Leonesa"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-10-17",
+    "gl": 0,
+    "gv": 0,
+    "hora": "20:30",
+    "id": "p20251017-andorr-granad",
+    "jornada": "",
+    "local": "Andorra",
+    "notas": "",
+    "puesto": "",
+    "sede": "Estadi Nacional",
+    "temporada": "2025/2026",
+    "visitante": "Granada"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-10-18",
+    "gl": 2,
+    "gv": 0,
+    "hora": "16:15",
+    "id": "p20251018-ceuta-mirand",
+    "jornada": "",
+    "local": "Ceuta",
+    "notas": "",
+    "puesto": "",
+    "sede": "Alfonso Murube",
+    "temporada": "2025/2026",
+    "visitante": "Mirandés"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-10-18",
+    "gl": 0,
+    "gv": 5,
+    "hora": "18:30",
+    "id": "p20251018-zarago-cultur",
+    "jornada": "",
+    "local": "Zaragoza",
+    "notas": "",
+    "puesto": "",
+    "sede": "La Romareda",
+    "temporada": "2025/2026",
+    "visitante": "Cultural Leonesa"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-10-19",
+    "gl": 0,
+    "gv": 1,
+    "hora": "21:00",
+    "id": "p20251019-getafe-realma",
+    "jornada": "",
+    "local": "Getafe",
+    "notas": "",
+    "puesto": "",
+    "sede": "Coliseum",
+    "temporada": "2025/2026",
+    "visitante": "Real Madrid"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-10-19",
+    "gl": 0,
+    "gv": 3,
+    "hora": "18:30",
+    "id": "p20251019-levant-rayova",
+    "jornada": "",
+    "local": "Levante",
+    "notas": "",
+    "puesto": "",
+    "sede": "Ciutat de València",
+    "temporada": "2025/2026",
+    "visitante": "Rayo Vallecano"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-10-20",
+    "gl": 1,
+    "gv": 3,
+    "hora": "20:30",
+    "id": "p20251020-cadiz-burgos",
+    "jornada": "",
+    "local": "Cádiz",
+    "notas": "",
+    "puesto": "",
+    "sede": "Nuevo Mirandilla",
+    "temporada": "2025/2026",
+    "visitante": "Burgos"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-10-25",
+    "gl": 1,
+    "gv": 0,
+    "hora": "18:30",
+    "id": "p20251025-burgos-realso",
+    "jornada": "",
+    "local": "Burgos",
+    "notas": "",
+    "puesto": "",
+    "sede": "El Plantío",
+    "temporada": "2025/2026",
+    "visitante": "Real Sociedad B"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-10-25",
+    "gl": 0,
+    "gv": 0,
+    "hora": "16:15",
+    "id": "p20251025-eibar-legane",
+    "jornada": "",
+    "local": "Eibar",
+    "notas": "",
+    "puesto": "",
+    "sede": "Ipurua",
+    "temporada": "2025/2026",
+    "visitante": "Leganés"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-10-26",
+    "gl": 2,
+    "gv": 3,
+    "hora": "18:30",
+    "id": "p20251026-osasun-celtad",
+    "jornada": "",
+    "local": "Osasuna",
+    "notas": "",
+    "puesto": "",
+    "sede": "El Sadar",
+    "temporada": "2025/2026",
+    "visitante": "Celta de Vigo"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-10-26",
+    "gl": 1,
+    "gv": 0,
+    "hora": "21:00",
+    "id": "p20251026-rayova-alaves",
+    "jornada": "",
+    "local": "Rayo Vallecano",
+    "notas": "",
+    "puesto": "",
+    "sede": "Estadio de Vallecas",
+    "temporada": "2025/2026",
+    "visitante": "Alavés"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-10-27",
+    "gl": 0,
+    "gv": 2,
+    "hora": "21:00",
+    "id": "p20251027-realbe-atleti",
+    "jornada": "",
+    "local": "Real Betis",
+    "notas": "",
+    "puesto": "",
+    "sede": "La Cartuja",
+    "temporada": "2025/2026",
+    "visitante": "Atlético de Madrid"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-10-31",
+    "gl": 1,
+    "gv": 0,
+    "hora": "20:30",
+    "id": "p20251031-racing-realso",
+    "jornada": "",
+    "local": "Racing de Santander",
+    "notas": "",
+    "puesto": "",
+    "sede": "El Sardinero",
+    "temporada": "2025/2026",
+    "visitante": "Real Sociedad B"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-11-02",
+    "gl": 0,
+    "gv": 0,
+    "hora": "14:00",
+    "id": "p20251102-andorr-cadiz",
+    "jornada": "",
+    "local": "Andorra",
+    "notas": "",
+    "puesto": "",
+    "sede": "Estadi Nacional",
+    "temporada": "2025/2026",
+    "visitante": "Cádiz"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-11-02",
+    "gl": 2,
+    "gv": 0,
+    "hora": "16:15",
+    "id": "p20251102-ceuta-cordob",
+    "jornada": "",
+    "local": "Córdoba",
+    "notas": "",
+    "puesto": "",
+    "sede": "Nuevo Arcángel",
+    "temporada": "2025/2026",
+    "visitante": "Ceuta"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-11-03",
+    "gl": 0,
+    "gv": 0,
+    "hora": "21:00",
+    "id": "p20251103-realov-osasun",
+    "jornada": "",
+    "local": "Real Oviedo",
+    "notas": "",
+    "puesto": "",
+    "sede": "Carlos Tartiere",
+    "temporada": "2025/2026",
+    "visitante": "Osasuna"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-11-07",
+    "gl": 2,
+    "gv": 1,
+    "hora": "20:30",
+    "id": "p20251107-mirand-sporti",
+    "jornada": "",
+    "local": "Mirandés",
+    "notas": "",
+    "puesto": "",
+    "sede": "Anduva",
+    "temporada": "2025/2026",
+    "visitante": "Sporting de Gijón"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-11-08",
+    "gl": 3,
+    "gv": 1,
+    "hora": "18:30",
+    "id": "p20251108-atleti-levant",
+    "jornada": "",
+    "local": "Atlético de Madrid",
+    "notas": "",
+    "puesto": "",
+    "sede": "Riyadh Air Metropolitano",
+    "temporada": "2025/2026",
+    "visitante": "Levante"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-11-08",
+    "gl": 0,
+    "gv": 2,
+    "hora": "21:00",
+    "id": "p20251108-espany-villar",
+    "jornada": "",
+    "local": "Espanyol",
+    "notas": "",
+    "puesto": "",
+    "sede": "RCDE Stadium",
+    "temporada": "2025/2026",
+    "visitante": "Villarreal"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-11-15",
+    "gl": 1,
+    "gv": 0,
+    "hora": "16:00",
+    "id": "p20251115-albace-andorr",
+    "jornada": "",
+    "local": "Albacete",
+    "notas": "",
+    "puesto": "",
+    "sede": "Carlos Belmonte",
+    "temporada": "2025/2026",
+    "visitante": "Andorra"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-11-17",
+    "gl": 1,
+    "gv": 0,
+    "hora": "20:30",
+    "id": "p20251117-cultur-malaga",
+    "jornada": "",
+    "local": "Cultural Leonesa",
+    "notas": "",
+    "puesto": "",
+    "sede": "Reino de León",
+    "temporada": "2025/2026",
+    "visitante": "Málaga"
+  },
+  {
+    "competicion": "Clasificación Mundial 2026",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-11-18",
+    "gl": 2,
+    "gv": 2,
+    "hora": "20:45",
+    "id": "p20251118-espana-turqui",
+    "jornada": "",
+    "local": "España",
+    "notas": "",
+    "puesto": "",
+    "sede": "La Cartuja",
+    "temporada": "2025/2026",
+    "visitante": "Turquía"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-11-21",
+    "gl": 1,
+    "gv": 0,
+    "hora": "21:00",
+    "id": "p20251121-valenc-levant",
+    "jornada": "",
+    "local": "Valencia",
+    "notas": "",
+    "puesto": "",
+    "sede": "Mestalla",
+    "temporada": "2025/2026",
+    "visitante": "Levante"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-11-22",
+    "gl": 0,
+    "gv": 1,
+    "hora": "14:00",
+    "id": "p20251122-alaves-celtad",
+    "jornada": "",
+    "local": "Alavés",
+    "notas": "",
+    "puesto": "",
+    "sede": "Mendizorroza",
+    "temporada": "2025/2026",
+    "visitante": "Celta de Vigo"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-11-22",
+    "gl": 4,
+    "gv": 0,
+    "hora": "16:15",
+    "id": "p20251122-fcbarc-athlet",
+    "jornada": "",
+    "local": "FC Barcelona",
+    "notas": "",
+    "puesto": "",
+    "sede": "Spotify Camp Nou",
+    "temporada": "2025/2026",
+    "visitante": "Athletic Club"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-11-24",
+    "gl": 2,
+    "gv": 1,
+    "hora": "21:00",
+    "id": "p20251124-espany-sevill",
+    "jornada": "",
+    "local": "Espanyol",
+    "notas": "",
+    "puesto": "",
+    "sede": "RCDE Stadium",
+    "temporada": "2025/2026",
+    "visitante": "Sevilla"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-11-28",
+    "gl": 1,
+    "gv": 0,
+    "hora": "21:00",
+    "id": "p20251128-getafe-elche",
+    "jornada": "",
+    "local": "Getafe",
+    "notas": "",
+    "puesto": "",
+    "sede": "Coliseum",
+    "temporada": "2025/2026",
+    "visitante": "Elche"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-11-29",
+    "gl": 3,
+    "gv": 1,
+    "hora": "16:15",
+    "id": "p20251129-fcbarc-alaves",
+    "jornada": "",
+    "local": "FC Barcelona",
+    "notas": "",
+    "puesto": "",
+    "sede": "Spotify Camp Nou",
+    "temporada": "2025/2026",
+    "visitante": "Alavés"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-11-29",
+    "gl": 2,
+    "gv": 2,
+    "hora": "14:00",
+    "id": "p20251129-mallor-osasun",
+    "jornada": "",
+    "local": "Mallorca",
+    "notas": "",
+    "puesto": "",
+    "sede": "Son Moix",
+    "temporada": "2025/2026",
+    "visitante": "Osasuna"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-11-30",
+    "gl": 0,
+    "gv": 1,
+    "hora": "18:30",
+    "id": "p20251130-celtad-espany",
+    "jornada": "",
+    "local": "Celta de Vigo",
+    "notas": "",
+    "puesto": "",
+    "sede": "Balaídos",
+    "temporada": "2025/2026",
+    "visitante": "Espanyol"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-11-30",
+    "gl": 1,
+    "gv": 1,
+    "hora": "21:00",
+    "id": "p20251130-girona-realma",
+    "jornada": "",
+    "local": "Girona",
+    "notas": "",
+    "puesto": "",
+    "sede": "Montilivi",
+    "temporada": "2025/2026",
+    "visitante": "Real Madrid"
+  },
+  {
+    "competicion": "Liga de Naciones Femenina",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-12-02",
+    "gl": 3,
+    "gv": 0,
+    "hora": "18:30",
+    "id": "p20251202-espana-aleman",
+    "jornada": "",
+    "local": "España (fem.)",
+    "notas": "",
+    "puesto": "",
+    "sede": "Riyadh Air Metropolitano",
+    "temporada": "2025/2026",
+    "visitante": "Alemania (fem.)"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-12-03",
+    "gl": 0,
+    "gv": 3,
+    "hora": "19:00",
+    "id": "p20251203-athlet-realma",
+    "jornada": "",
+    "local": "Athletic Club",
+    "notas": "",
+    "puesto": "",
+    "sede": "San Mamés",
+    "temporada": "2025/2026",
+    "visitante": "Real Madrid"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-12-07",
+    "gl": 1,
+    "gv": 0,
+    "hora": "18:30",
+    "id": "p20251207-espany-rayova",
+    "jornada": "",
+    "local": "Espanyol",
+    "notas": "",
+    "puesto": "",
+    "sede": "RCDE Stadium",
+    "temporada": "2025/2026",
+    "visitante": "Rayo Vallecano"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-12-07",
+    "gl": 0,
+    "gv": 2,
+    "hora": "21:00",
+    "id": "p20251207-realma-celtad",
+    "jornada": "",
+    "local": "Real Madrid",
+    "notas": "",
+    "puesto": "",
+    "sede": "Santiago Bernabéu",
+    "temporada": "2025/2026",
+    "visitante": "Celta de Vigo"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-12-08",
+    "gl": 2,
+    "gv": 0,
+    "hora": "21:00",
+    "id": "p20251208-osasun-levant",
+    "jornada": "",
+    "local": "Osasuna",
+    "notas": "",
+    "puesto": "",
+    "sede": "El Sadar",
+    "temporada": "2025/2026",
+    "visitante": "Levante"
+  },
+  {
+    "competicion": "Champions League",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-12-09",
+    "gl": 2,
+    "gv": 1,
+    "hora": "21:00",
+    "id": "p20251209-fcbarc-eintra",
+    "jornada": "",
+    "local": "FC Barcelona",
+    "notas": "",
+    "puesto": "",
+    "sede": "Spotify Camp Nou",
+    "temporada": "2025/2026",
+    "visitante": "Eintracht Frankfurt"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-12-12",
+    "gl": 0,
+    "gv": 2,
+    "hora": "20:30",
+    "id": "p20251212-cultur-huesca",
+    "jornada": "",
+    "local": "Cultural Leonesa",
+    "notas": "",
+    "puesto": "",
+    "sede": "Reino de León",
+    "temporada": "2025/2026",
+    "visitante": "Huesca"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-12-13",
+    "gl": 0,
+    "gv": 3,
+    "hora": "21:00",
+    "id": "p20251213-deport-realso",
+    "jornada": "",
+    "local": "Deportivo de La Coruña",
+    "notas": "",
+    "puesto": "",
+    "sede": "Riazor",
+    "temporada": "2025/2026",
+    "visitante": "Real Sociedad B"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-12-14",
+    "gl": 1,
+    "gv": 2,
+    "hora": "18:30",
+    "id": "p20251214-almeri-burgos",
+    "jornada": "",
+    "local": "Almería",
+    "notas": "",
+    "puesto": "",
+    "sede": "Power Horse Stadium",
+    "temporada": "2025/2026",
+    "visitante": "Burgos"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-12-14",
+    "gl": 1,
+    "gv": 1,
+    "hora": "21:00",
+    "id": "p20251214-ceuta-laspal",
+    "jornada": "",
+    "local": "Ceuta",
+    "notas": "",
+    "puesto": "",
+    "sede": "Alfonso Murube",
+    "temporada": "2025/2026",
+    "visitante": "Las Palmas"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-12-15",
+    "gl": 3,
+    "gv": 1,
+    "hora": "20:30",
+    "id": "p20251215-castel-mirand",
+    "jornada": "",
+    "local": "Castellón",
+    "notas": "",
+    "puesto": "",
+    "sede": "Castalia",
+    "temporada": "2025/2026",
+    "visitante": "Mirandés"
+  },
+  {
+    "competicion": "Copa del Rey",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-12-16",
+    "gl": 0,
+    "gv": 1,
+    "hora": "19:00",
+    "id": "p20251216-eibar-elche",
+    "jornada": "",
+    "local": "Eibar",
+    "notas": "",
+    "puesto": "",
+    "sede": "Ipurua",
+    "temporada": "2025/2026",
+    "visitante": "Elche"
+  },
+  {
+    "competicion": "Copa del Rey",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-12-16",
+    "gl": 0,
+    "gv": 2,
+    "hora": "21:00",
+    "id": "p20251216-sporti-valenc",
+    "jornada": "",
+    "local": "Sporting de Gijón",
+    "notas": "",
+    "puesto": "",
+    "sede": "El Molinón",
+    "temporada": "2025/2026",
+    "visitante": "Valencia"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-12-19",
+    "gl": 1,
+    "gv": 1,
+    "hora": "21:00",
+    "id": "p20251219-valenc-mallor",
+    "jornada": "",
+    "local": "Valencia",
+    "notas": "",
+    "puesto": "",
+    "sede": "Mestalla",
+    "temporada": "2025/2026",
+    "visitante": "Mallorca"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-12-20",
+    "gl": 1,
+    "gv": 1,
+    "hora": "16:15",
+    "id": "p20251220-levant-realso",
+    "jornada": "",
+    "local": "Levante",
+    "notas": "",
+    "puesto": "",
+    "sede": "Ciutat de València",
+    "temporada": "2025/2026",
+    "visitante": "Real Sociedad"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-12-20",
+    "gl": 0,
+    "gv": 0,
+    "hora": "14:00",
+    "id": "p20251220-realov-celtad",
+    "jornada": "",
+    "local": "Real Oviedo",
+    "notas": "",
+    "puesto": "",
+    "sede": "Carlos Tartiere",
+    "temporada": "2025/2026",
+    "visitante": "Celta de Vigo"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2025-12-22",
+    "gl": 1,
+    "gv": 2,
+    "hora": "21:00",
+    "id": "p20251222-athlet-espany",
+    "jornada": "",
+    "local": "Athletic Club",
+    "notas": "",
+    "puesto": "",
+    "sede": "San Mamés",
+    "temporada": "2025/2026",
+    "visitante": "Espanyol"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-01-02",
+    "gl": 2,
+    "gv": 1,
+    "hora": "20:30",
+    "id": "p20260102-eibar-mirand",
+    "jornada": "",
+    "local": "Eibar",
+    "notas": "",
+    "puesto": "",
+    "sede": "Ipurua",
+    "temporada": "2025/2026",
+    "visitante": "Mirandés"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-01-03",
+    "gl": 4,
+    "gv": 1,
+    "hora": "14:00",
+    "id": "p20260103-celtad-valenc",
+    "jornada": "",
+    "local": "Celta de Vigo",
+    "notas": "",
+    "puesto": "",
+    "sede": "Balaídos",
+    "temporada": "2025/2026",
+    "visitante": "Valencia"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-01-03",
+    "gl": 1,
+    "gv": 1,
+    "hora": "16:15",
+    "id": "p20260103-osasun-athlet",
+    "jornada": "",
+    "local": "Osasuna",
+    "notas": "",
+    "puesto": "",
+    "sede": "El Sadar",
+    "temporada": "2025/2026",
+    "visitante": "Athletic Club"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-01-04",
+    "gl": 1,
+    "gv": 2,
+    "hora": "18:30",
+    "id": "p20260104-mallor-girona",
+    "jornada": "",
+    "local": "Mallorca",
+    "notas": "",
+    "puesto": "",
+    "sede": "Son Moix",
+    "temporada": "2025/2026",
+    "visitante": "Girona"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-01-09",
+    "gl": 1,
+    "gv": 2,
+    "hora": "21:00",
+    "id": "p20260109-getafe-realso",
+    "jornada": "",
+    "local": "Getafe",
+    "notas": "",
+    "puesto": "",
+    "sede": "Coliseum",
+    "temporada": "2025/2026",
+    "visitante": "Real Sociedad"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-01-12",
+    "gl": 0,
+    "gv": 1,
+    "hora": "21:00",
+    "id": "p20260112-sevill-celtad",
+    "jornada": "",
+    "local": "Sevilla",
+    "notas": "",
+    "puesto": "",
+    "sede": "Ramón Sánchez-Pizjuán",
+    "temporada": "2025/2026",
+    "visitante": "Celta de Vigo"
+  },
+  {
+    "competicion": "Copa del Rey",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-01-14",
+    "gl": 2,
+    "gv": 0,
+    "hora": "21:00",
+    "id": "p20260114-alaves-rayova",
+    "jornada": "",
+    "local": "Alavés",
+    "notas": "",
+    "puesto": "",
+    "sede": "Mendizorroza",
+    "temporada": "2025/2026",
+    "visitante": "Rayo Vallecano"
+  },
+  {
+    "competicion": "Copa del Rey",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-01-15",
+    "gl": 0,
+    "gv": 2,
+    "hora": "21:00",
+    "id": "p20260115-burgos-valenc",
+    "jornada": "",
+    "local": "Burgos",
+    "notas": "",
+    "puesto": "",
+    "sede": "El Plantío",
+    "temporada": "2025/2026",
+    "visitante": "Valencia"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-01-17",
+    "gl": 1,
+    "gv": 2,
+    "hora": "21:00",
+    "id": "p20260117-almeri-deport",
+    "jornada": "",
+    "local": "Almería",
+    "notas": "",
+    "puesto": "",
+    "sede": "Power Horse Stadium",
+    "temporada": "2025/2026",
+    "visitante": "Deportivo de La Coruña"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-01-17",
+    "gl": 1,
+    "gv": 1,
+    "hora": "18:30",
+    "id": "p20260117-zarago-realso",
+    "jornada": "",
+    "local": "Zaragoza",
+    "notas": "",
+    "puesto": "",
+    "sede": "La Romareda",
+    "temporada": "2025/2026",
+    "visitante": "Real Sociedad B"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-01-18",
+    "gl": 1,
+    "gv": 0,
+    "hora": "18:30",
+    "id": "p20260118-burgos-huesca",
+    "jornada": "",
+    "local": "Burgos",
+    "notas": "",
+    "puesto": "",
+    "sede": "El Plantío",
+    "temporada": "2025/2026",
+    "visitante": "Huesca"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-01-18",
+    "gl": 0,
+    "gv": 1,
+    "hora": "21:00",
+    "id": "p20260118-cordob-malaga",
+    "jornada": "",
+    "local": "Córdoba",
+    "notas": "",
+    "puesto": "",
+    "sede": "Nuevo Arcángel",
+    "temporada": "2025/2026",
+    "visitante": "Málaga"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-01-23",
+    "gl": 3,
+    "gv": 2,
+    "hora": "21:00",
+    "id": "p20260123-levant-elche",
+    "jornada": "",
+    "local": "Levante",
+    "notas": "",
+    "puesto": "",
+    "sede": "Ciutat de València",
+    "temporada": "2025/2026",
+    "visitante": "Elche"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-01-24",
+    "gl": 2,
+    "gv": 0,
+    "hora": "16:15",
+    "id": "p20260124-legane-realso",
+    "jornada": "",
+    "local": "Leganés",
+    "notas": "",
+    "puesto": "",
+    "sede": "Butarque",
+    "temporada": "2025/2026",
+    "visitante": "Real Sociedad B"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-01-24",
+    "gl": 0,
+    "gv": 1,
+    "hora": "14:00",
+    "id": "p20260124-vallad-albace",
+    "jornada": "",
+    "local": "Valladolid",
+    "notas": "",
+    "puesto": "",
+    "sede": "José Zorrilla",
+    "temporada": "2025/2026",
+    "visitante": "Albacete"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-01-26",
+    "gl": 1,
+    "gv": 1,
+    "hora": "21:00",
+    "id": "p20260126-girona-getafe",
+    "jornada": "",
+    "local": "Girona",
+    "notas": "",
+    "puesto": "",
+    "sede": "Montilivi",
+    "temporada": "2025/2026",
+    "visitante": "Getafe"
+  },
+  {
+    "competicion": "Champions League",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-01-28",
+    "gl": 1,
+    "gv": 2,
+    "hora": "21:00",
+    "id": "p20260128-atleti-bodgli",
+    "jornada": "",
+    "local": "Atlético de Madrid",
+    "notas": "",
+    "puesto": "",
+    "sede": "Riyadh Air Metropolitano",
+    "temporada": "2025/2026",
+    "visitante": "Bodø/Glimt"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-01-30",
+    "gl": 1,
+    "gv": 2,
+    "hora": "21:00",
+    "id": "p20260130-espany-alaves",
+    "jornada": "",
+    "local": "Espanyol",
+    "notas": "",
+    "puesto": "",
+    "sede": "RCDE Stadium",
+    "temporada": "2025/2026",
+    "visitante": "Alavés"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-02-01",
+    "gl": 2,
+    "gv": 0,
+    "hora": "18:30",
+    "id": "p20260201-castel-andorr",
+    "jornada": "",
+    "local": "Castellón",
+    "notas": "",
+    "puesto": "",
+    "sede": "Castalia",
+    "temporada": "2025/2026",
+    "visitante": "Andorra"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-02-01",
+    "gl": 1,
+    "gv": 0,
+    "hora": "21:00",
+    "id": "p20260201-granad-racing",
+    "jornada": "",
+    "local": "Granada",
+    "notas": "",
+    "puesto": "",
+    "sede": "Nuevo Los Cármenes",
+    "temporada": "2025/2026",
+    "visitante": "Racing de Santander"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-02-02",
+    "gl": 4,
+    "gv": 1,
+    "hora": "21:00",
+    "id": "p20260202-mallor-sevill",
+    "jornada": "",
+    "local": "Mallorca",
+    "notas": "",
+    "puesto": "",
+    "sede": "Son Moix",
+    "temporada": "2025/2026",
+    "visitante": "Sevilla"
+  },
+  {
+    "competicion": "Copa del Rey",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-02-04",
+    "gl": 2,
+    "gv": 3,
+    "hora": "21:00",
+    "id": "p20260204-alaves-realso",
+    "jornada": "",
+    "local": "Alavés",
+    "notas": "",
+    "puesto": "",
+    "sede": "Mendizorroza",
+    "temporada": "2025/2026",
+    "visitante": "Real Sociedad"
+  },
+  {
+    "competicion": "Copa del Rey",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-02-05",
+    "gl": 0,
+    "gv": 5,
+    "hora": "21:00",
+    "id": "p20260205-realbe-atleti",
+    "jornada": "",
+    "local": "Real Betis",
+    "notas": "",
+    "puesto": "",
+    "sede": "La Cartuja",
+    "temporada": "2025/2026",
+    "visitante": "Atlético de Madrid"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-02-06",
+    "gl": 1,
+    "gv": 2,
+    "hora": "21:00",
+    "id": "p20260206-celtad-osasun",
+    "jornada": "",
+    "local": "Celta de Vigo",
+    "notas": "",
+    "puesto": "",
+    "sede": "Balaídos",
+    "temporada": "2025/2026",
+    "visitante": "Osasuna"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-02-08",
+    "gl": 1,
+    "gv": 2,
+    "hora": "16:15",
+    "id": "p20260207-cadiz-almeri",
+    "jornada": "",
+    "local": "Cádiz",
+    "notas": "",
+    "puesto": "",
+    "sede": "Nuevo Mirandilla",
+    "temporada": "2025/2026",
+    "visitante": "Almería"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-02-08",
+    "gl": 0,
+    "gv": 1,
+    "hora": "18:30",
+    "id": "p20260208-atleti-realbe",
+    "jornada": "",
+    "local": "Atlético de Madrid",
+    "notas": "",
+    "puesto": "",
+    "sede": "Riyadh Air Metropolitano",
+    "temporada": "2025/2026",
+    "visitante": "Real Betis"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-02-08",
+    "gl": 0,
+    "gv": 2,
+    "hora": "21:00",
+    "id": "p20260208-valenc-realma",
+    "jornada": "",
+    "local": "Valencia",
+    "notas": "",
+    "puesto": "",
+    "sede": "Mestalla",
+    "temporada": "2025/2026",
+    "visitante": "Real Madrid"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-02-09",
+    "gl": 1,
+    "gv": 0,
+    "hora": "20:30",
+    "id": "p20260209-racing-mirand",
+    "jornada": "",
+    "local": "Racing de Santander",
+    "notas": "",
+    "puesto": "",
+    "sede": "El Sardinero",
+    "temporada": "2025/2026",
+    "visitante": "Mirandés"
+  },
+  {
+    "competicion": "Copa del Rey",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-02-12",
+    "gl": 4,
+    "gv": 0,
+    "hora": "21:00",
+    "id": "p20260212-atleti-fcbarc",
+    "jornada": "",
+    "local": "Atlético de Madrid",
+    "notas": "Semifinal ida Copa del Rey",
+    "puesto": "",
+    "sede": "Riyadh Air Metropolitano",
+    "temporada": "2025/2026",
+    "visitante": "FC Barcelona"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-02-14",
+    "gl": 1,
+    "gv": 1,
+    "hora": "16:15",
+    "id": "p20260214-burgos-cadiz",
+    "jornada": "",
+    "local": "Burgos",
+    "notas": "",
+    "puesto": "",
+    "sede": "El Plantío",
+    "temporada": "2025/2026",
+    "visitante": "Cádiz"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-02-14",
+    "gl": 2,
+    "gv": 1,
+    "hora": "14:00",
+    "id": "p20260214-cordob-legane",
+    "jornada": "",
+    "local": "Córdoba",
+    "notas": "",
+    "puesto": "",
+    "sede": "Nuevo Arcángel",
+    "temporada": "2025/2026",
+    "visitante": "Leganés"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-02-15",
+    "gl": 0,
+    "gv": 2,
+    "hora": "18:30",
+    "id": "p20260215-levant-valenc",
+    "jornada": "",
+    "local": "Levante",
+    "notas": "",
+    "puesto": "",
+    "sede": "Ciutat de València",
+    "temporada": "2025/2026",
+    "visitante": "Valencia"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-02-15",
+    "gl": 1,
+    "gv": 2,
+    "hora": "21:00",
+    "id": "p20260215-mallor-realbe",
+    "jornada": "",
+    "local": "Mallorca",
+    "notas": "",
+    "puesto": "",
+    "sede": "Son Moix",
+    "temporada": "2025/2026",
+    "visitante": "Real Betis"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-02-16",
+    "gl": 2,
+    "gv": 1,
+    "hora": "21:00",
+    "id": "p20260216-girona-fcbarc",
+    "jornada": "",
+    "local": "Girona",
+    "notas": "",
+    "puesto": "",
+    "sede": "Montilivi",
+    "temporada": "2025/2026",
+    "visitante": "FC Barcelona"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-02-20",
+    "gl": 2,
+    "gv": 1,
+    "hora": "21:00",
+    "id": "p20260220-athlet-elche",
+    "jornada": "",
+    "local": "Athletic Club",
+    "notas": "",
+    "puesto": "",
+    "sede": "San Mamés",
+    "temporada": "2025/2026",
+    "visitante": "Elche"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-02-21",
+    "gl": 1,
+    "gv": 0,
+    "hora": "16:15",
+    "id": "p20260221-deport-eibar",
+    "jornada": "",
+    "local": "Deportivo de La Coruña",
+    "notas": "",
+    "puesto": "",
+    "sede": "Riazor",
+    "temporada": "2025/2026",
+    "visitante": "Eibar"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-02-21",
+    "gl": 1,
+    "gv": 1,
+    "hora": "14:00",
+    "id": "p20260221-legane-cultur",
+    "jornada": "",
+    "local": "Leganés",
+    "notas": "",
+    "puesto": "",
+    "sede": "Butarque",
+    "temporada": "2025/2026",
+    "visitante": "Cultural Leonesa"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-02-22",
+    "gl": 2,
+    "gv": 1,
+    "hora": "16:15",
+    "id": "p20260222-andorr-zarago",
+    "jornada": "",
+    "local": "Andorra",
+    "notas": "",
+    "puesto": "",
+    "sede": "Estadi Nacional",
+    "temporada": "2025/2026",
+    "visitante": "Zaragoza"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-02-22",
+    "gl": 2,
+    "gv": 2,
+    "hora": "14:00",
+    "id": "p20260222-sporti-vallad",
+    "jornada": "",
+    "local": "Sporting de Gijón",
+    "notas": "",
+    "puesto": "",
+    "sede": "El Molinón",
+    "temporada": "2025/2026",
+    "visitante": "Valladolid"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-02-23",
+    "gl": 2,
+    "gv": 2,
+    "hora": "21:00",
+    "id": "p20260223-alaves-girona",
+    "jornada": "",
+    "local": "Alavés",
+    "notas": "",
+    "puesto": "",
+    "sede": "Mendizorroza",
+    "temporada": "2025/2026",
+    "visitante": "Girona"
+  },
+  {
+    "competicion": "Champions League",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-02-24",
+    "gl": 4,
+    "gv": 1,
+    "hora": "18:45",
+    "id": "p20260224-atleti-clubbr",
+    "jornada": "",
+    "local": "Atlético de Madrid",
+    "notas": "Playoff Champions vuelta, global 7-4",
+    "puesto": "",
+    "sede": "Riyadh Air Metropolitano",
+    "temporada": "2025/2026",
+    "visitante": "Club Brujas"
+  },
+  {
+    "competicion": "Champions League",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-02-25",
+    "gl": 2,
+    "gv": 1,
+    "hora": "21:00",
+    "id": "p20260225-realma-benfic",
+    "jornada": "",
+    "local": "Real Madrid",
+    "notas": "Playoff Champions vuelta, global 3-1",
+    "puesto": "",
+    "sede": "Santiago Bernabéu",
+    "temporada": "2025/2026",
+    "visitante": "Benfica"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-02-27",
+    "gl": 2,
+    "gv": 0,
+    "hora": "21:00",
+    "id": "p20260227-levant-alaves",
+    "jornada": "",
+    "local": "Levante",
+    "notas": "",
+    "puesto": "",
+    "sede": "Ciutat de València",
+    "temporada": "2025/2026",
+    "visitante": "Alavés"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-02-28",
+    "gl": 4,
+    "gv": 1,
+    "hora": "16:15",
+    "id": "p20260228-fcbarc-villar",
+    "jornada": "",
+    "local": "FC Barcelona",
+    "notas": "",
+    "puesto": "",
+    "sede": "Spotify Camp Nou",
+    "temporada": "2025/2026",
+    "visitante": "Villarreal"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-02-28",
+    "gl": 1,
+    "gv": 1,
+    "hora": "14:00",
+    "id": "p20260228-rayova-athlet",
+    "jornada": "",
+    "local": "Rayo Vallecano",
+    "notas": "",
+    "puesto": "",
+    "sede": "Estadio de Vallecas",
+    "temporada": "2025/2026",
+    "visitante": "Athletic Club"
+  },
+  {
+    "competicion": "Copa del Rey",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-03-04",
+    "gl": 1,
+    "gv": 0,
+    "hora": "21:00",
+    "id": "p20260304-realso-athlet",
+    "jornada": "",
+    "local": "Real Sociedad",
+    "notas": "Semifinal vuelta Copa del Rey, global 2-0",
+    "puesto": "",
+    "sede": "Reale Arena",
+    "temporada": "2025/2026",
+    "visitante": "Athletic Club"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-03-08",
+    "gl": 1,
+    "gv": 1,
+    "hora": "18:30",
+    "id": "p20260308-sevill-rayova",
+    "jornada": "",
+    "local": "Sevilla",
+    "notas": "",
+    "puesto": "",
+    "sede": "Ramón Sánchez-Pizjuán",
+    "temporada": "2025/2026",
+    "visitante": "Rayo Vallecano"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-03-08",
+    "gl": 3,
+    "gv": 2,
+    "hora": "21:00",
+    "id": "p20260308-valenc-alaves",
+    "jornada": "",
+    "local": "Valencia",
+    "notas": "",
+    "puesto": "",
+    "sede": "Mestalla",
+    "temporada": "2025/2026",
+    "visitante": "Alavés"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-03-09",
+    "gl": 1,
+    "gv": 1,
+    "hora": "21:00",
+    "id": "p20260309-espany-realov",
+    "jornada": "",
+    "local": "Espanyol",
+    "notas": "",
+    "puesto": "",
+    "sede": "RCDE Stadium",
+    "temporada": "2025/2026",
+    "visitante": "Real Oviedo"
+  },
+  {
+    "competicion": "Champions League",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-03-10",
+    "gl": 5,
+    "gv": 2,
+    "hora": "21:00",
+    "id": "p20260310-atleti-totten",
+    "jornada": "",
+    "local": "Atlético de Madrid",
+    "notas": "",
+    "puesto": "",
+    "sede": "Riyadh Air Metropolitano",
+    "temporada": "2025/2026",
+    "visitante": "Tottenham"
+  },
+  {
+    "competicion": "Champions League",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-03-11",
+    "gl": 3,
+    "gv": 0,
+    "hora": "21:00",
+    "id": "p20260311-realma-manche",
+    "jornada": "",
+    "local": "Real Madrid",
+    "notas": "",
+    "puesto": "",
+    "sede": "Santiago Bernabéu",
+    "temporada": "2025/2026",
+    "visitante": "Manchester City"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-03-15",
+    "gl": 5,
+    "gv": 2,
+    "hora": "16:15",
+    "id": "p20260315-fcbarc-sevill",
+    "jornada": "",
+    "local": "FC Barcelona",
+    "notas": "",
+    "puesto": "",
+    "sede": "Spotify Camp Nou",
+    "temporada": "2025/2026",
+    "visitante": "Sevilla"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-03-15",
+    "gl": 2,
+    "gv": 1,
+    "hora": "14:00",
+    "id": "p20260315-mallor-espany",
+    "jornada": "",
+    "local": "Mallorca",
+    "notas": "",
+    "puesto": "",
+    "sede": "Son Moix",
+    "temporada": "2025/2026",
+    "visitante": "Espanyol"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-03-16",
+    "gl": 1,
+    "gv": 1,
+    "hora": "21:00",
+    "id": "p20260316-rayova-levant",
+    "jornada": "",
+    "local": "Rayo Vallecano",
+    "notas": "",
+    "puesto": "",
+    "sede": "Estadio de Vallecas",
+    "temporada": "2025/2026",
+    "visitante": "Levante"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-03-21",
+    "gl": 2,
+    "gv": 1,
+    "hora": "14:00",
+    "id": "p20260321-elche-mallor",
+    "jornada": "",
+    "local": "Elche",
+    "notas": "",
+    "puesto": "",
+    "sede": "Martínez Valero",
+    "temporada": "2025/2026",
+    "visitante": "Mallorca"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-03-21",
+    "gl": 1,
+    "gv": 2,
+    "hora": "16:15",
+    "id": "p20260321-espany-getafe",
+    "jornada": "",
+    "local": "Espanyol",
+    "notas": "",
+    "puesto": "",
+    "sede": "RCDE Stadium",
+    "temporada": "2025/2026",
+    "visitante": "Getafe"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-03-22",
+    "gl": 3,
+    "gv": 4,
+    "hora": "16:15",
+    "id": "p20260322-celtad-alaves",
+    "jornada": "",
+    "local": "Celta de Vigo",
+    "notas": "",
+    "puesto": "",
+    "sede": "Balaídos",
+    "temporada": "2025/2026",
+    "visitante": "Alavés"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-03-22",
+    "gl": 1,
+    "gv": 0,
+    "hora": "14:00",
+    "id": "p20260322-fcbarc-rayova",
+    "jornada": "",
+    "local": "FC Barcelona",
+    "notas": "",
+    "puesto": "",
+    "sede": "Spotify Camp Nou",
+    "temporada": "2025/2026",
+    "visitante": "Rayo Vallecano"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-03-23",
+    "gl": 1,
+    "gv": 1,
+    "hora": "20:30",
+    "id": "p20260323-castel-cultur",
+    "jornada": "",
+    "local": "Castellón",
+    "notas": "",
+    "puesto": "",
+    "sede": "Castalia",
+    "temporada": "2025/2026",
+    "visitante": "Cultural Leonesa"
+  },
+  {
+    "competicion": "Amistoso internacional",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-03-27",
+    "gl": 3,
+    "gv": 0,
+    "hora": "21:00",
+    "id": "p20260327-espana-serbia",
+    "jornada": "",
+    "local": "España",
+    "notas": "",
+    "puesto": "",
+    "sede": "",
+    "temporada": "2025/2026",
+    "visitante": "Serbia"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-03-28",
+    "gl": 1,
+    "gv": 1,
+    "hora": "21:00",
+    "id": "p20260328-albace-castel",
+    "jornada": "",
+    "local": "Albacete",
+    "notas": "",
+    "puesto": "",
+    "sede": "Carlos Belmonte",
+    "temporada": "2025/2026",
+    "visitante": "Castellón"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-03-29",
+    "gl": 0,
+    "gv": 4,
+    "hora": "16:15",
+    "id": "p20260329-cultur-andorr",
+    "jornada": "",
+    "local": "Cultural Leonesa",
+    "notas": "",
+    "puesto": "",
+    "sede": "Reino de León",
+    "temporada": "2025/2026",
+    "visitante": "Andorra"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.831Z",
+    "fecha": "2026-03-29",
+    "gl": 3,
+    "gv": 1,
+    "hora": "14:00",
+    "id": "p20260329-eibar-laspal",
+    "jornada": "",
+    "local": "Eibar",
+    "notas": "",
+    "puesto": "",
+    "sede": "Ipurua",
+    "temporada": "2025/2026",
+    "visitante": "Las Palmas"
+  },
+  {
+    "competicion": "Balonmano",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-04-02",
+    "gl": null,
+    "gv": null,
+    "hora": "",
+    "id": "p20260402-ligaas",
+    "jornada": "",
+    "local": "Liga ASOBAL",
+    "notas": "Test",
+    "puesto": "",
+    "sede": "",
+    "temporada": "2025/2026",
+    "visitante": ""
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-04-02",
+    "gl": 0,
+    "gv": 1,
+    "hora": "20:00",
+    "id": "p20260402-realso-eibar",
+    "jornada": "",
+    "local": "Real Sociedad B",
+    "notas": "",
+    "puesto": "",
+    "sede": "Reale Arena",
+    "temporada": "2025/2026",
+    "visitante": "Eibar"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-04-04",
+    "gl": 2,
+    "gv": 1,
+    "hora": "16:15",
+    "id": "p20260404-mallor-realma",
+    "jornada": "",
+    "local": "Mallorca",
+    "notas": "",
+    "puesto": "",
+    "sede": "Son Moix",
+    "temporada": "2025/2026",
+    "visitante": "Real Madrid"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-04-04",
+    "gl": 2,
+    "gv": 0,
+    "hora": "14:00",
+    "id": "p20260404-realso-levant",
+    "jornada": "",
+    "local": "Real Sociedad",
+    "notas": "",
+    "puesto": "",
+    "sede": "Reale Arena",
+    "temporada": "2025/2026",
+    "visitante": "Levante"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-04-05",
+    "gl": 2,
+    "gv": 0,
+    "hora": "14:00",
+    "id": "p20260405-getafe-athlet",
+    "jornada": "",
+    "local": "Getafe",
+    "notas": "",
+    "puesto": "",
+    "sede": "Coliseum",
+    "temporada": "2025/2026",
+    "visitante": "Athletic Club"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-04-05",
+    "gl": 2,
+    "gv": 3,
+    "hora": "16:15",
+    "id": "p20260405-valenc-celtad",
+    "jornada": "",
+    "local": "Valencia",
+    "notas": "",
+    "puesto": "",
+    "sede": "Mestalla",
+    "temporada": "2025/2026",
+    "visitante": "Celta de Vigo"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-04-10",
+    "gl": 0,
+    "gv": 0,
+    "hora": "20:30",
+    "id": "p20260410-ceuta-realso",
+    "jornada": "",
+    "local": "Ceuta",
+    "notas": "",
+    "puesto": "",
+    "sede": "Alfonso Murube",
+    "temporada": "2025/2026",
+    "visitante": "Real Sociedad B"
+  },
+  {
+    "competicion": "Balonmano",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-04-11",
+    "gl": null,
+    "gv": null,
+    "hora": "",
+    "id": "p20260411-ligaas",
+    "jornada": "",
+    "local": "Liga ASOBAL",
+    "notas": "",
+    "puesto": "",
+    "sede": "",
+    "temporada": "2025/2026",
+    "visitante": ""
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-04-11",
+    "gl": 2,
+    "gv": 1,
+    "hora": "21:00",
+    "id": "p20260411-sevill-atleti",
+    "jornada": "",
+    "local": "Sevilla",
+    "notas": "",
+    "puesto": "",
+    "sede": "Ramón Sánchez-Pizjuán",
+    "temporada": "2025/2026",
+    "visitante": "Atlético de Madrid"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-04-12",
+    "gl": 1,
+    "gv": 0,
+    "hora": "14:00",
+    "id": "p20260412-granad-cultur",
+    "jornada": "",
+    "local": "Granada",
+    "notas": "",
+    "puesto": "",
+    "sede": "Nuevo Los Cármenes",
+    "temporada": "2025/2026",
+    "visitante": "Cultural Leonesa"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-04-12",
+    "gl": 1,
+    "gv": 1,
+    "hora": "16:15",
+    "id": "p20260412-huesca-deport",
+    "jornada": "",
+    "local": "Huesca",
+    "notas": "",
+    "puesto": "",
+    "sede": "El Alcoraz",
+    "temporada": "2025/2026",
+    "visitante": "Deportivo de La Coruña"
+  },
+  {
+    "competicion": "Balonmano",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-04-17",
+    "gl": null,
+    "gv": null,
+    "hora": "",
+    "id": "p20260417-ligaas",
+    "jornada": "",
+    "local": "Liga ASOBAL",
+    "notas": "",
+    "puesto": "",
+    "sede": "",
+    "temporada": "2025/2026",
+    "visitante": ""
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-04-18",
+    "gl": 3,
+    "gv": 1,
+    "hora": "18:30",
+    "id": "p20260418-castel-burgos",
+    "jornada": "",
+    "local": "Castellón",
+    "notas": "",
+    "puesto": "",
+    "sede": "Castalia",
+    "temporada": "2025/2026",
+    "visitante": "Burgos"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-04-21",
+    "gl": 2,
+    "gv": 3,
+    "hora": "21:30",
+    "id": "p20260421-girona-realbe",
+    "jornada": "",
+    "local": "Girona",
+    "notas": "",
+    "puesto": "",
+    "sede": "Montilivi",
+    "temporada": "2025/2026",
+    "visitante": "Real Betis"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-04-21",
+    "gl": 1,
+    "gv": 1,
+    "hora": "19:00",
+    "id": "p20260421-mallor-valenc",
+    "jornada": "",
+    "local": "Mallorca",
+    "notas": "",
+    "puesto": "",
+    "sede": "Son Moix",
+    "temporada": "2025/2026",
+    "visitante": "Valencia"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-04-22",
+    "gl": 0,
+    "gv": 1,
+    "hora": "20:00",
+    "id": "p20260422-realso-getafe",
+    "jornada": "",
+    "local": "Real Sociedad",
+    "notas": "",
+    "puesto": "",
+    "sede": "Reale Arena",
+    "temporada": "2025/2026",
+    "visitante": "Getafe"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-04-23",
+    "gl": 2,
+    "gv": 0,
+    "hora": "19:00",
+    "id": "p20260423-levant-sevill",
+    "jornada": "",
+    "local": "Levante",
+    "notas": "",
+    "puesto": "",
+    "sede": "Ciutat de València",
+    "temporada": "2025/2026",
+    "visitante": "Sevilla"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-04-23",
+    "gl": 1,
+    "gv": 1,
+    "hora": "21:30",
+    "id": "p20260423-realov-villar",
+    "jornada": "",
+    "local": "Real Oviedo",
+    "notas": "",
+    "puesto": "",
+    "sede": "Carlos Tartiere",
+    "temporada": "2025/2026",
+    "visitante": "Villarreal"
+  },
+  {
+    "competicion": "Balonmano",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-04-24",
+    "gl": null,
+    "gv": null,
+    "hora": "",
+    "id": "p20260424-ligaas",
+    "jornada": "",
+    "local": "Liga ASOBAL",
+    "notas": "",
+    "puesto": "",
+    "sede": "",
+    "temporada": "2025/2026",
+    "visitante": ""
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-04-24",
+    "gl": 1,
+    "gv": 1,
+    "hora": "21:00",
+    "id": "p20260424-realbe-realma",
+    "jornada": "",
+    "local": "Real Betis",
+    "notas": "",
+    "puesto": "",
+    "sede": "La Cartuja",
+    "temporada": "2025/2026",
+    "visitante": "Real Madrid"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-04-25",
+    "gl": 2,
+    "gv": 1,
+    "hora": "14:00",
+    "id": "p20260425-alaves-mallor",
+    "jornada": "",
+    "local": "Alavés",
+    "notas": "",
+    "puesto": "",
+    "sede": "Mendizorroza",
+    "temporada": "2025/2026",
+    "visitante": "Mallorca"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-04-25",
+    "gl": 0,
+    "gv": 2,
+    "hora": "16:15",
+    "id": "p20260425-getafe-fcbarc",
+    "jornada": "",
+    "local": "Getafe",
+    "notas": "",
+    "puesto": "",
+    "sede": "Coliseum",
+    "temporada": "2025/2026",
+    "visitante": "FC Barcelona"
+  },
+  {
+    "competicion": "Balonmano",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-04-26",
+    "gl": null,
+    "gv": null,
+    "hora": "",
+    "id": "p20260426-ligaas",
+    "jornada": "",
+    "local": "Liga ASOBAL",
+    "notas": "",
+    "puesto": "",
+    "sede": "",
+    "temporada": "2025/2026",
+    "visitante": ""
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-04-26",
+    "gl": 2,
+    "gv": 1,
+    "hora": "21:00",
+    "id": "p20260426-villar-celtad",
+    "jornada": "",
+    "local": "Villarreal",
+    "notas": "",
+    "puesto": "",
+    "sede": "Estadio de la Cerámica",
+    "temporada": "2025/2026",
+    "visitante": "Celta de Vigo"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-04-27",
+    "gl": 1,
+    "gv": 2,
+    "hora": "20:30",
+    "id": "p20260427-cadiz-laspal",
+    "jornada": "",
+    "local": "Cádiz",
+    "notas": "",
+    "puesto": "",
+    "sede": "Nuevo Mirandilla",
+    "temporada": "2025/2026",
+    "visitante": "Las Palmas"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-05-01",
+    "gl": 0,
+    "gv": 1,
+    "hora": "16:15",
+    "id": "p20260501-albace-andorr",
+    "jornada": "",
+    "local": "Andorra",
+    "notas": "",
+    "puesto": "",
+    "sede": "Estadi Nacional",
+    "temporada": "2025/2026",
+    "visitante": "Albacete"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-05-02",
+    "gl": 2,
+    "gv": 4,
+    "hora": "18:30",
+    "id": "p20260502-alaves-athlet",
+    "jornada": "",
+    "local": "Alavés",
+    "notas": "",
+    "puesto": "",
+    "sede": "Mendizorroza",
+    "temporada": "2025/2026",
+    "visitante": "Athletic Club"
+  },
+  {
+    "competicion": "Balonmano",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-05-02",
+    "gl": null,
+    "gv": null,
+    "hora": "",
+    "id": "p20260502-ligaas",
+    "jornada": "",
+    "local": "Liga ASOBAL",
+    "notas": "",
+    "puesto": "",
+    "sede": "",
+    "temporada": "2025/2026",
+    "visitante": ""
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-05-03",
+    "gl": 2,
+    "gv": 1,
+    "hora": "21:00",
+    "id": "p20260503-laspal-vallad",
+    "jornada": "",
+    "local": "Las Palmas",
+    "notas": "",
+    "puesto": "",
+    "sede": "Gran Canaria",
+    "temporada": "2025/2026",
+    "visitante": "Valladolid"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-05-03",
+    "gl": 0,
+    "gv": 0,
+    "hora": "18:30",
+    "id": "p20260503-realso-burgos",
+    "jornada": "",
+    "local": "Real Sociedad B",
+    "notas": "",
+    "puesto": "",
+    "sede": "Reale Arena",
+    "temporada": "2025/2026",
+    "visitante": "Burgos"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-05-08",
+    "gl": 0,
+    "gv": 1,
+    "hora": "20:30",
+    "id": "p20260508-cadiz-deport",
+    "jornada": "",
+    "local": "Cádiz",
+    "notas": "",
+    "puesto": "",
+    "sede": "Nuevo Mirandilla",
+    "temporada": "2025/2026",
+    "visitante": "Deportivo de La Coruña"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-05-09",
+    "gl": 0,
+    "gv": 1,
+    "hora": "18:30",
+    "id": "p20260509-atleti-celtad",
+    "jornada": "",
+    "local": "Atlético de Madrid",
+    "notas": "",
+    "puesto": "",
+    "sede": "Riyadh Air Metropolitano",
+    "temporada": "2025/2026",
+    "visitante": "Celta de Vigo"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-05-09",
+    "gl": 2,
+    "gv": 2,
+    "hora": "21:00",
+    "id": "p20260509-realso-realbe",
+    "jornada": "",
+    "local": "Real Sociedad",
+    "notas": "",
+    "puesto": "",
+    "sede": "Reale Arena",
+    "temporada": "2025/2026",
+    "visitante": "Real Betis"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-05-10",
+    "gl": 0,
+    "gv": 1,
+    "hora": "16:15",
+    "id": "p20260510-athlet-valenc",
+    "jornada": "",
+    "local": "Athletic Club",
+    "notas": "",
+    "puesto": "",
+    "sede": "San Mamés",
+    "temporada": "2025/2026",
+    "visitante": "Valencia"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-05-10",
+    "gl": 1,
+    "gv": 1,
+    "hora": "14:00",
+    "id": "p20260510-mallor-villar",
+    "jornada": "",
+    "local": "Mallorca",
+    "notas": "",
+    "puesto": "",
+    "sede": "Son Moix",
+    "temporada": "2025/2026",
+    "visitante": "Villarreal"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-05-12",
+    "gl": 2,
+    "gv": 1,
+    "hora": "20:00",
+    "id": "p20260512-realbe-elche",
+    "jornada": "",
+    "local": "Real Betis",
+    "notas": "",
+    "puesto": "",
+    "sede": "La Cartuja",
+    "temporada": "2025/2026",
+    "visitante": "Elche"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-05-13",
+    "gl": 1,
+    "gv": 0,
+    "hora": "21:30",
+    "id": "p20260513-alaves-fcbarc",
+    "jornada": "",
+    "local": "Alavés",
+    "notas": "",
+    "puesto": "",
+    "sede": "Mendizorroza",
+    "temporada": "2025/2026",
+    "visitante": "FC Barcelona"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-05-13",
+    "gl": 2,
+    "gv": 3,
+    "hora": "19:00",
+    "id": "p20260513-villar-sevill",
+    "jornada": "",
+    "local": "Villarreal",
+    "notas": "",
+    "puesto": "",
+    "sede": "Estadio de la Cerámica",
+    "temporada": "2025/2026",
+    "visitante": "Sevilla"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-05-14",
+    "gl": 2,
+    "gv": 0,
+    "hora": "21:30",
+    "id": "p20260514-realma-realov",
+    "jornada": "",
+    "local": "Real Madrid",
+    "notas": "",
+    "puesto": "",
+    "sede": "Santiago Bernabéu",
+    "temporada": "2025/2026",
+    "visitante": "Real Oviedo"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-05-14",
+    "gl": 1,
+    "gv": 1,
+    "hora": "19:00",
+    "id": "p20260514-valenc-rayova",
+    "jornada": "",
+    "local": "Valencia",
+    "notas": "",
+    "puesto": "",
+    "sede": "Mestalla",
+    "temporada": "2025/2026",
+    "visitante": "Rayo Vallecano"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-05-15",
+    "gl": 1,
+    "gv": 2,
+    "hora": "21:00",
+    "id": "p20260515-cordob-albace",
+    "jornada": "",
+    "local": "Córdoba",
+    "notas": "",
+    "puesto": "",
+    "sede": "Nuevo Arcángel",
+    "temporada": "2025/2026",
+    "visitante": "Albacete"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-05-17",
+    "gl": 2,
+    "gv": 1,
+    "hora": "14:00",
+    "id": "p20260517-deport-andorr",
+    "jornada": "",
+    "local": "Deportivo de La Coruña",
+    "notas": "",
+    "puesto": "",
+    "sede": "Riazor",
+    "temporada": "2025/2026",
+    "visitante": "Andorra"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-05-17",
+    "gl": 1,
+    "gv": 2,
+    "hora": "19:00",
+    "id": "p20260517-osasun-espany",
+    "jornada": "",
+    "local": "Osasuna",
+    "notas": "",
+    "puesto": "",
+    "sede": "El Sadar",
+    "temporada": "2025/2026",
+    "visitante": "Espanyol"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-05-18",
+    "gl": 0,
+    "gv": 0,
+    "hora": "20:30",
+    "id": "p20260518-legane-huesca",
+    "jornada": "",
+    "local": "Leganés",
+    "notas": "",
+    "puesto": "",
+    "sede": "Butarque",
+    "temporada": "2025/2026",
+    "visitante": "Huesca"
+  },
+  {
+    "competicion": "Balonmano",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-05-22",
+    "gl": null,
+    "gv": null,
+    "hora": "",
+    "id": "p20260522-ligaas",
+    "jornada": "",
+    "local": "Liga ASOBAL",
+    "notas": "",
+    "puesto": "",
+    "sede": "",
+    "temporada": "2025/2026",
+    "visitante": ""
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-05-23",
+    "gl": 1,
+    "gv": 2,
+    "hora": "21:00",
+    "id": "p20260523-alaves-rayova",
+    "jornada": "",
+    "local": "Alavés",
+    "notas": "",
+    "puesto": "",
+    "sede": "Mendizorroza",
+    "temporada": "2025/2026",
+    "visitante": "Rayo Vallecano"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-05-24",
+    "gl": 2,
+    "gv": 0,
+    "hora": "18:30",
+    "id": "p20260524-eibar-cordob",
+    "jornada": "",
+    "local": "Eibar",
+    "notas": "",
+    "puesto": "",
+    "sede": "Ipurua",
+    "temporada": "2025/2026",
+    "visitante": "Córdoba"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-05-30",
+    "gl": 1,
+    "gv": 1,
+    "hora": "16:15",
+    "id": "p20260530-realso-cultur",
+    "jornada": "",
+    "local": "Real Sociedad B",
+    "notas": "",
+    "puesto": "",
+    "sede": "Reale Arena",
+    "temporada": "2025/2026",
+    "visitante": "Cultural Leonesa"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-05-31",
+    "gl": 1,
+    "gv": 0,
+    "hora": "21:00",
+    "id": "p20260531-legane-mirand",
+    "jornada": "",
+    "local": "Leganés",
+    "notas": "",
+    "puesto": "",
+    "sede": "Butarque",
+    "temporada": "2025/2026",
+    "visitante": "Mirandés"
+  },
+  {
+    "competicion": "Balonmano",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-05-31",
+    "gl": null,
+    "gv": null,
+    "hora": "",
+    "id": "p20260531-ligaas",
+    "jornada": "",
+    "local": "Liga ASOBAL",
+    "notas": "",
+    "puesto": "",
+    "sede": "",
+    "temporada": "2025/2026",
+    "visitante": ""
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-06-06",
+    "gl": 1,
+    "gv": 1,
+    "hora": "21:00",
+    "id": "p20260606-castel-almeri",
+    "jornada": "",
+    "local": "Castellón",
+    "notas": "Playoff de ascenso, semifinal ida",
+    "puesto": "",
+    "sede": "Castalia",
+    "temporada": "2025/2026",
+    "visitante": "Almería"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-06-07",
+    "gl": 0,
+    "gv": 1,
+    "hora": "21:00",
+    "id": "p20260607-laspal-malaga",
+    "jornada": "",
+    "local": "Las Palmas",
+    "notas": "Playoff de ascenso, semifinal ida",
+    "puesto": "",
+    "sede": "Gran Canaria",
+    "temporada": "2025/2026",
+    "visitante": "Málaga"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-02T12:33:59.832Z",
+    "fecha": "2026-06-14",
+    "gl": 0,
+    "gv": 0,
+    "hora": "21:00",
+    "id": "p20260614-malaga-almeri",
+    "jornada": "",
+    "local": "Málaga",
+    "notas": "Playoff de ascenso, final ida",
+    "puesto": "",
+    "sede": "La Rosaleda",
+    "temporada": "2025/2026",
+    "visitante": "Almería"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-03T16:47:34.279Z",
+    "fecha": "2026-08-15",
+    "gl": 3,
+    "gv": 0,
+    "hora": "19:30",
+    "id": "p20260815-alaves-getafe",
+    "jornada": "J1",
+    "local": "Alavés",
+    "notas": "",
+    "puesto": "",
+    "sede": "Mendizorroza",
+    "temporada": "2026/2027",
+    "visitante": "Getafe"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-03T16:47:34.295Z",
+    "fecha": "2026-08-15",
+    "gl": 2,
+    "gv": 1,
+    "hora": "21:30",
+    "id": "p20260815-sevill-rayova",
+    "jornada": "J1",
+    "local": "Sevilla",
+    "notas": "",
+    "puesto": "",
+    "sede": "Ramón Sánchez-Pizjuán",
+    "temporada": "2026/2027",
+    "visitante": "Rayo Vallecano"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-03T16:47:34.295Z",
+    "fecha": "2026-08-16",
+    "gl": 3,
+    "gv": 0,
+    "hora": "19:00",
+    "id": "p20260816-espany-levant",
+    "jornada": "J1",
+    "local": "Espanyol",
+    "notas": "",
+    "puesto": "",
+    "sede": "RCDE Stadium",
+    "temporada": "2026/2027",
+    "visitante": "Levante"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-03T16:47:34.295Z",
+    "fecha": "2026-08-17",
+    "gl": 3,
+    "gv": 0,
+    "hora": "21:30",
+    "id": "p20260817-almeri-eldens",
+    "jornada": "J1",
+    "local": "Almería",
+    "notas": "",
+    "puesto": "",
+    "sede": "Power Horse Stadium",
+    "temporada": "2026/2027",
+    "visitante": "Eldense"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-03T16:47:34.295Z",
+    "fecha": "2026-08-17",
+    "gl": 0,
+    "gv": 0,
+    "hora": "19:00",
+    "id": "p20260817-sporti-sabade",
+    "jornada": "J1",
+    "local": "Sporting de Gijón",
+    "notas": "",
+    "puesto": "",
+    "sede": "El Molinón",
+    "temporada": "2026/2027",
+    "visitante": "Sabadell"
+  },
+  {
+    "competicion": "Trofeo Joan Gamper",
+    "creado": "2026-09-03T16:47:34.295Z",
+    "fecha": "2026-08-19",
+    "gl": 2,
+    "gv": 1,
+    "hora": "20:00",
+    "id": "p20260819-fcbarc-alahly",
+    "jornada": "",
+    "local": "FC Barcelona",
+    "notas": "",
+    "puesto": "",
+    "sede": "Spotify Camp Nou",
+    "temporada": "2026/2027",
+    "visitante": "Al Ahly"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-03T16:47:34.295Z",
+    "fecha": "2026-08-21",
+    "gl": 2,
+    "gv": 1,
+    "hora": "21:00",
+    "id": "p20260821-cordob-girona",
+    "jornada": "J2",
+    "local": "Córdoba",
+    "notas": "",
+    "puesto": "",
+    "sede": "Nuevo Arcángel",
+    "temporada": "2026/2027",
+    "visitante": "Girona"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-03T16:47:34.295Z",
+    "fecha": "2026-08-22",
+    "gl": 0,
+    "gv": 2,
+    "hora": "19:00",
+    "id": "p20260822-ceuta-laspal",
+    "jornada": "J2",
+    "local": "Ceuta",
+    "notas": "",
+    "puesto": "",
+    "sede": "Alfonso Murube",
+    "temporada": "2026/2027",
+    "visitante": "Las Palmas"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-03T16:47:34.295Z",
+    "fecha": "2026-08-22",
+    "gl": 2,
+    "gv": 2,
+    "hora": "21:30",
+    "id": "p20260822-eldens-cadiz",
+    "jornada": "J2",
+    "local": "Eldense",
+    "notas": "",
+    "puesto": "",
+    "sede": "Pepico Amat",
+    "temporada": "2026/2027",
+    "visitante": "Cádiz"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-03T16:47:34.295Z",
+    "fecha": "2026-08-23",
+    "gl": 0,
+    "gv": 5,
+    "hora": "21:30",
+    "id": "p20260823-elche-fcbarc",
+    "jornada": "J2",
+    "local": "Elche",
+    "notas": "",
+    "puesto": "",
+    "sede": "Martínez Valero",
+    "temporada": "2026/2027",
+    "visitante": "FC Barcelona"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-03T16:47:34.295Z",
+    "fecha": "2026-08-23",
+    "gl": 1,
+    "gv": 0,
+    "hora": "19:30",
+    "id": "p20260823-getafe-racing",
+    "jornada": "J2",
+    "local": "Getafe",
+    "notas": "",
+    "puesto": "",
+    "sede": "Coliseum",
+    "temporada": "2026/2027",
+    "visitante": "Racing de Santander"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-03T16:47:34.295Z",
+    "fecha": "2026-08-24",
+    "gl": 4,
+    "gv": 2,
+    "hora": "19:00",
+    "id": "p20260824-celtaf-andorr",
+    "jornada": "J2",
+    "local": "Celta Fortuna",
+    "notas": "",
+    "puesto": "",
+    "sede": "Balaídos",
+    "temporada": "2026/2027",
+    "visitante": "Andorra"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-03T16:47:34.295Z",
+    "fecha": "2026-08-24",
+    "gl": 2,
+    "gv": 0,
+    "hora": "21:30",
+    "id": "p20260824-granad-mallor",
+    "jornada": "J2",
+    "local": "Granada",
+    "notas": "",
+    "puesto": "",
+    "sede": "Nuevo Los Cármenes",
+    "temporada": "2026/2027",
+    "visitante": "Mallorca"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-03T16:47:34.295Z",
+    "fecha": "2026-08-27",
+    "gl": 1,
+    "gv": 2,
+    "hora": "20:30",
+    "id": "p20260827-celtad-osasun",
+    "jornada": "J1",
+    "local": "Celta de Vigo",
+    "notas": "Jornada 1 aplazada",
+    "puesto": "",
+    "sede": "Balaídos",
+    "temporada": "2026/2027",
+    "visitante": "Osasuna"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-03T16:47:34.295Z",
+    "fecha": "2026-08-29",
+    "gl": 0,
+    "gv": 1,
+    "hora": "19:00",
+    "id": "p20260829-albace-realov",
+    "jornada": "J3",
+    "local": "Albacete",
+    "notas": "",
+    "puesto": "",
+    "sede": "Carlos Belmonte",
+    "temporada": "2026/2027",
+    "visitante": "Real Oviedo"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-03T16:47:34.295Z",
+    "fecha": "2026-08-29",
+    "gl": 1,
+    "gv": 0,
+    "hora": "17:00",
+    "id": "p20260829-sabade-almeri",
+    "jornada": "J3",
+    "local": "Sabadell",
+    "notas": "",
+    "puesto": "",
+    "sede": "Nova Creu Alta",
+    "temporada": "2026/2027",
+    "visitante": "Almería"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-03T16:47:34.295Z",
+    "fecha": "2026-08-30",
+    "gl": 3,
+    "gv": 1,
+    "hora": "19:30",
+    "id": "p20260830-deport-valenc",
+    "jornada": "J3",
+    "local": "Deportivo de La Coruña",
+    "notas": "",
+    "puesto": "",
+    "sede": "Riazor",
+    "temporada": "2026/2027",
+    "visitante": "Valencia"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-03T16:47:34.295Z",
+    "fecha": "2026-08-30",
+    "gl": 4,
+    "gv": 0,
+    "hora": "17:00",
+    "id": "p20260830-realma-malaga",
+    "jornada": "J3",
+    "local": "Real Madrid",
+    "notas": "",
+    "puesto": "",
+    "sede": "Santiago Bernabéu",
+    "temporada": "2026/2027",
+    "visitante": "Málaga"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-03T16:47:34.295Z",
+    "fecha": "2026-09-03",
+    "gl": 0,
+    "gv": 0,
+    "hora": "21:00",
+    "id": "p20260903-realso-celtad",
+    "jornada": "J6",
+    "local": "Real Sociedad",
+    "notas": "Jornada 6 adelantada",
+    "puesto": "",
+    "sede": "Reale Arena",
+    "temporada": "2026/2027",
+    "visitante": "Celta de Vigo"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-03T16:47:34.295Z",
+    "fecha": "2026-09-04",
+    "gl": 1,
+    "gv": 0,
+    "hora": "21:00",
+    "id": "p20260904-realbe-realma",
+    "jornada": "J4",
+    "local": "Real Betis",
+    "notas": "",
+    "puesto": "",
+    "sede": "La Cartuja",
+    "temporada": "2026/2027",
+    "visitante": "Real Madrid"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-03T16:47:34.295Z",
+    "fecha": "2026-09-05",
+    "gl": 0,
+    "gv": 0,
+    "hora": "21:00",
+    "id": "p20260905-eldens-mallor",
+    "jornada": "J4",
+    "local": "Eldense",
+    "notas": "",
+    "puesto": "",
+    "sede": "Pepico Amat",
+    "temporada": "2026/2027",
+    "visitante": "Mallorca"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-03T16:47:34.295Z",
+    "fecha": "2026-09-05",
+    "gl": 1,
+    "gv": 0,
+    "hora": "18:30",
+    "id": "p20260905-vallad-andorr",
+    "jornada": "J4",
+    "local": "Valladolid",
+    "notas": "",
+    "puesto": "",
+    "sede": "José Zorrilla",
+    "temporada": "2026/2027",
+    "visitante": "Andorra"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-03T16:47:34.295Z",
+    "fecha": "2026-09-06",
+    "gl": 3,
+    "gv": 2,
+    "hora": "21:00",
+    "id": "p20260906-almeri-cadiz",
+    "jornada": "J4",
+    "local": "Almería",
+    "notas": "",
+    "puesto": "",
+    "sede": "Power Horse Stadium",
+    "temporada": "2026/2027",
+    "visitante": "Cádiz"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-03T16:47:34.295Z",
+    "fecha": "2026-09-07",
+    "gl": 2,
+    "gv": 3,
+    "hora": "21:30",
+    "id": "p20260907-elche-realso",
+    "jornada": "J4",
+    "local": "Elche",
+    "notas": "",
+    "puesto": "",
+    "sede": "Martínez Valero",
+    "temporada": "2026/2027",
+    "visitante": "Real Sociedad"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-03T16:47:34.295Z",
+    "fecha": "2026-09-07",
+    "gl": 1,
+    "gv": 1,
+    "hora": "19:00",
+    "id": "p20260907-getafe-celtad",
+    "jornada": "J4",
+    "local": "Getafe",
+    "notas": "",
+    "puesto": "",
+    "sede": "Coliseum",
+    "temporada": "2026/2027",
+    "visitante": "Celta de Vigo"
+  },
+  {
+    "competicion": "Champions League",
+    "creado": "2026-09-08T12:00:00.000Z",
+    "fecha": "2026-09-08",
+    "gl": 2,
+    "gv": 1,
+    "hora": "21:00",
+    "id": "p20260908-realma-interm",
+    "jornada": "Fase liga J1",
+    "local": "Real Madrid",
+    "notas": "",
+    "puesto": "",
+    "sede": "Santiago Bernabéu",
+    "temporada": "2026/2027",
+    "visitante": "Inter de Milán"
+  },
+  {
+    "competicion": "Champions League",
+    "creado": "2026-09-08T12:00:00.000Z",
+    "fecha": "2026-09-09",
+    "gl": 5,
+    "gv": 1,
+    "hora": "18:45",
+    "id": "p20260909-fcbarc-feyeno",
+    "jornada": "Fase liga J1",
+    "local": "FC Barcelona",
+    "notas": "",
+    "puesto": "",
+    "sede": "Spotify Camp Nou",
+    "temporada": "2026/2027",
+    "visitante": "Feyenoord"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-08T12:00:00.000Z",
+    "fecha": "2026-09-11",
+    "gl": 3,
+    "gv": 1,
+    "hora": "20:30",
+    "id": "p20260911-burgos-ceuta",
+    "jornada": "J5",
+    "local": "Burgos",
+    "notas": "",
+    "puesto": "",
+    "sede": "El Plantío",
+    "temporada": "2026/2027",
+    "visitante": "Ceuta"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-08T12:00:00.000Z",
+    "fecha": "2026-09-12",
+    "gl": 1,
+    "gv": 1,
+    "hora": "18:30",
+    "id": "p20260912-granad-albace",
+    "jornada": "J5",
+    "local": "Granada",
+    "notas": "",
+    "puesto": "",
+    "sede": "Nuevo Los Cármenes",
+    "temporada": "2026/2027",
+    "visitante": "Albacete"
+  },
+  {
+    "competicion": "Balonmano",
+    "creado": "2026-09-08T12:00:00.000Z",
+    "fecha": "2026-09-12",
+    "gl": null,
+    "gv": null,
+    "hora": "",
+    "id": "p20260912-ligaas",
+    "jornada": "",
+    "local": "Liga ASOBAL",
+    "notas": "",
+    "puesto": "",
+    "sede": "",
+    "temporada": "2026/2027",
+    "visitante": ""
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-08T12:00:00.000Z",
+    "fecha": "2026-09-13",
+    "gl": 1,
+    "gv": 1,
+    "hora": "18:30",
+    "id": "p20260913-getafe-deport",
+    "jornada": "J5",
+    "local": "Getafe",
+    "notas": "",
+    "puesto": "",
+    "sede": "Coliseum",
+    "temporada": "2026/2027",
+    "visitante": "Deportivo de La Coruña"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-08T12:00:00.000Z",
+    "fecha": "2026-09-13",
+    "gl": 0,
+    "gv": 3,
+    "hora": "21:00",
+    "id": "p20260913-realso-atleti",
+    "jornada": "J5",
+    "local": "Real Sociedad",
+    "notas": "",
+    "puesto": "",
+    "sede": "Reale Arena",
+    "temporada": "2026/2027",
+    "visitante": "Atlético de Madrid"
+  },
+  {
+    "competicion": "LaLiga Hypermotion",
+    "creado": "2026-09-08T12:00:00.000Z",
+    "fecha": "2026-09-14",
+    "gl": 0,
+    "gv": 4,
+    "hora": "20:30",
+    "id": "p20260914-celtaf-eibar",
+    "jornada": "J5",
+    "local": "Celta Fortuna",
+    "notas": "",
+    "puesto": "",
+    "sede": "Balaídos",
+    "temporada": "2026/2027",
+    "visitante": "Eibar"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-11T12:00:00.000Z",
+    "fecha": "2026-09-15",
+    "gl": 0,
+    "gv": 1,
+    "hora": "20:00",
+    "id": "p20260915-alaves-valenc",
+    "jornada": "J6",
+    "local": "Alavés",
+    "notas": "",
+    "puesto": "",
+    "sede": "Mendizorroza",
+    "temporada": "2026/2027",
+    "visitante": "Valencia"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-11T12:00:00.000Z",
+    "fecha": "2026-09-16",
+    "gl": 4,
+    "gv": 0,
+    "hora": "19:00",
+    "id": "p20260916-atleti-osasun",
+    "jornada": "J6",
+    "local": "Atlético de Madrid",
+    "notas": "",
+    "puesto": "",
+    "sede": "Riyadh Air Metropolitano",
+    "temporada": "2026/2027",
+    "visitante": "Osasuna"
+  },
+  {
+    "competicion": "LaLiga EA Sports",
+    "creado": "2026-09-11T12:00:00.000Z",
+    "fecha": "2026-09-16",
+    "gl": 7,
+    "gv": 2,
+    "hora": "21:30",
+    "id": "p20260916-fcbarc-racing",
+    "jornada": "J6",
+    "local": "FC Barcelona",
+    "notas": "",
+    "puesto": "",
+    "sede": "Spotify Camp Nou",
+    "temporada": "2026/2027",
+    "visitante": "Racing de Santander"
+  }
+];
+let matches=[];               // {id, fecha, hora, competicion, jornada, local, visitante, gl, gv, sede, puesto, notas, temporada}
+let db=null, downloads=null;
+const LS='cuaderno-operador-partidos';
+const localStore={
+  load(){
+    try {
+      let stored = localStorage.getItem(LS);
+      if (stored && stored !== '[]') {
+        matches = JSON.parse(stored);
+      } else {
+        matches = JSON.parse(JSON.stringify(defaultMatches)); // Deep copy
+        this.save();
+      }
+    } catch(e) {
+      matches = JSON.parse(JSON.stringify(defaultMatches));
+    }
+    render();
+  },
+  save(){try{localStorage.setItem(LS,JSON.stringify(matches));}catch(e){}render();},
+  async put(m){const i=matches.findIndex(x=>x.id===m.id);if(i>=0)matches[i]=m;else matches.push(m);this.save();},
+  async del(id){matches=matches.filter(x=>x.id!==id);this.save();}
+};
+let store=localStore;
+const setStatus=(txt,ok)=>{const s=$('#status');s.className='status'+(ok?' ok':'');s.querySelector('span').textContent=txt;};
+
+/* ---------- estado de filtros ---------- */
+const state={season:'2025/2026',comps:new Set(),month:'',team:''};
+const compSlots=new Map();
+function slotFor(comp){
+  if(COMP_SLOT[comp])return COMP_SLOT[comp];
+  if(compSlots.has(comp))return compSlots.get(comp);
+  const used=new Set([...Object.values(COMP_SLOT),...compSlots.values()]);
+  let s=1;while(used.has(s)&&s<8)s++;
+  compSlots.set(comp,s);return s;
+}
+const colorOf=comp=>`var(--s${slotFor(comp)})`;
+
+/* ---------- render ---------- */
+function render(){
+  matches.forEach(m=>{if(!m.temporada&&m.fecha)m.temporada=seasonOf(m.fecha);});
+  // temporadas
+  const seasons=new Set(matches.map(m=>m.temporada).filter(Boolean));seasons.add('2025/2026');
+  const sel=$('#season');const cur=state.season;
+  sel.innerHTML=[...seasons].sort().reverse().map(s=>`<option ${s===cur?'selected':''}>${s}</option>`).join('');
+  state.season=sel.value;
+
+  const inSeason=matches.filter(m=>m.temporada===state.season).sort((a,b)=>(b.fecha+(b.hora||'')).localeCompare(a.fecha+(a.hora||'')));
+  const compCount={};inSeason.forEach(m=>compCount[m.competicion]=(compCount[m.competicion]||0)+1);
+  // limpiar filtros que ya no existen
+  [...state.comps].forEach(c=>{if(!compCount[c])state.comps.delete(c);});
+
+  const q=norm(state.team);
+  const shown=inSeason.filter(m=>
+    (!state.comps.size||state.comps.has(m.competicion))&&
+    (!state.month||new Date(m.fecha+'T00:00:00').getMonth()===+state.month)&&
+    (!q||norm(m.local).includes(q)||norm(m.visitante).includes(q))
+  );
+  const filtered=state.comps.size||state.month||q;
+  $('#clearBtn').hidden=!filtered;
+
+  renderTiles(shown,inSeason,filtered);
+  renderApply();
+  renderChips(compCount);
+  renderMonthSel(inSeason);
+  renderList(shown,inSeason.length);
+  renderChart(shown);
+  renderTeams(shown);
+  renderDatalists();
+  const pend=pendingResults();$('#refreshBtn').hidden=!pend.length;$('#refreshN').textContent=pend.length;
+}
+const today=()=>new Date().toISOString().slice(0,10);
+function pendingResults(){return matches.filter(m=>m.visitante&&(m.gl==null||m.gv==null)&&m.fecha<=today()).sort((a,b)=>a.fecha.localeCompare(b.fecha));}
+
+/* ---------- resultados buscados (sept. 2026) ---------- */
+const RESULTS=[
+ {fecha:'2026-09-11',kl:['burgos'],kv:['ceuta'],gl:3,gv:1,hora:'20:30',sede:'El Plantío',jornada:'J5'},
+ {fecha:'2026-09-12',kl:['granada'],kv:['albacete'],gl:1,gv:1,hora:'18:30',sede:'Nuevo Los Cármenes',jornada:'J5'},
+ {fecha:'2026-09-13',kl:['getafe'],kv:['deportivo','coruna','depor'],gl:1,gv:1,hora:'18:30',sede:'Coliseum',jornada:'J5'},
+ {fecha:'2026-09-13',kl:['sociedad','real s'],kv:['atletico','atleti'],gl:0,gv:3,hora:'21:00',sede:'Anoeta',jornada:'J5'},
+ {fecha:'2026-09-14',kl:['fortuna','celta'],kv:['eibar'],gl:0,gv:4,hora:'20:30',sede:'Abanca Balaídos',jornada:'J5'},
+ {fecha:'2026-09-15',kl:['alaves'],kv:['valencia'],gl:0,gv:1,hora:'20:00',sede:'Mendizorroza',jornada:'J6'},
+ {fecha:'2026-09-16',kl:['atletico','atleti'],kv:['osasuna'],gl:4,gv:0,hora:'19:00',sede:'Riyadh Air Metropolitano',jornada:'J6'},
+ {fecha:'2026-09-16',kl:['barcelona','barca'],kv:['racing'],gl:7,gv:2,hora:'21:30',sede:'Spotify Camp Nou',jornada:'J6'}
+];
+const hits=(txt,keys)=>{const n=norm(txt);return keys.some(k=>n.includes(k));};
+function applyPairs(){
+  const out=[];
+  RESULTS.forEach(r=>{
+    const m=matches.find(x=>x.fecha===r.fecha&&x.visitante&&hits(x.local,r.kl)&&hits(x.visitante,r.kv)&&(x.gl==null||x.gv==null));
+    if(m)out.push({m,r});
+  });
+  return out;
+}
+function renderApply(){
+  const pairs=applyPairs();const el=$('#apply');
+  el.hidden=!pairs.length;
+  if(!pairs.length)return;
+  el.innerHTML=`<h3>Resultados encontrados</h3>
+    <p>He buscado el marcador, la hora y el estadio de ${pairs.length} ${pairs.length===1?'partido':'partidos'}. Revísalos y pulsa para guardarlos en el cuaderno.</p>
+    <ul>${pairs.map(({m,r})=>`<li>${esc(m.fecha)} · ${esc(m.local)} <b class="num">${r.gl}–${r.gv}</b> ${esc(m.visitante)} · ${r.hora} h · ${esc(r.sede)}</li>`).join('')}</ul>
+    <div class="acts2"><button class="btn primary" id="applyBtn">Guardar ${pairs.length} ${pairs.length===1?'resultado':'resultados'}</button></div>`;
+}
+document.addEventListener('click',async e=>{
+  if(!e.target.closest('#applyBtn'))return;
+  const btn=e.target.closest('#applyBtn');btn.disabled=true;
+  const pairs=applyPairs();let ok=0;
+  for(const {m,r} of pairs){
+    try{await store.put({...m,gl:r.gl,gv:r.gv,hora:m.hora||r.hora,sede:m.sede||r.sede,jornada:m.jornada||r.jornada});ok++;}
+    catch(ex){}
+  }
+  toast(ok===pairs.length?`${ok} ${ok===1?'resultado guardado':'resultados guardados'}`:`Guardados ${ok} de ${pairs.length}`);
+  btn.disabled=false;render();
+});
+
+function renderTiles(shown,all,filtered){
+  const teams=new Set();shown.forEach(m=>{teams.add(m.local);if(m.visitante)teams.add(m.visitante);});
+  const comps=new Set(shown.map(m=>m.competicion));
+  const byMonth={};shown.forEach(m=>{const k=new Date(m.fecha+'T00:00:00').getMonth();byMonth[k]=(byMonth[k]||0)+1;});
+  const top=Object.entries(byMonth).sort((a,b)=>b[1]-a[1])[0];
+  const homeCount={};shown.forEach(m=>homeCount[m.sede||m.local]=(homeCount[m.sede||m.local]||0)+1);
+  const topSede=Object.entries(homeCount).sort((a,b)=>b[1]-a[1])[0];
+  $('#tiles').innerHTML=`
+    <div class="tile"><div class="k">Partidos</div><div class="v num">${shown.length}${filtered?`<small>de ${all.length}</small>`:''}</div><div class="d">${filtered?'con los filtros activos':'temporada '+state.season}</div></div>
+    <div class="tile"><div class="k">Equipos distintos</div><div class="v num">${teams.size}</div><div class="d">${comps.size} ${comps.size===1?'competición':'competiciones'}</div></div>
+    <div class="tile"><div class="k">Mes más cargado</div><div class="v">${top?cap(MESES[+top[0]]):'—'}</div><div class="d">${top?top[1]+' partido'+(top[1]===1?'':'s'):'sin datos'}</div></div>
+    <div class="tile"><div class="k">Sede más visitada</div><div class="v" style="font-size:24px;margin-top:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${esc(topSede?topSede[0]:'')}">${topSede?esc(topSede[0]):'—'}</div><div class="d">${topSede?topSede[1]+' vez'+(topSede[1]===1?'':'es'):'sin datos'}</div></div>`;
+}
+function renderChips(compCount){
+  const comps=Object.keys(compCount).sort((a,b)=>compCount[b]-compCount[a]);
+  $('#compChips').innerHTML=comps.map(c=>`<button class="chip ${state.comps.has(c)?'on':''}" data-comp="${esc(c)}" style="--c:${colorOf(c)}"><i></i>${esc(c)} <span class="n num">${compCount[c]}</span></button>`).join('');
+}
+function renderMonthSel(inSeason){
+  const present=new Set(inSeason.map(m=>new Date(m.fecha+'T00:00:00').getMonth()));
+  const sel=$('#monthSel');
+  sel.innerHTML='<option value="">Todos los meses</option>'+SEASON_ORDER.filter(i=>present.has(i)).map(i=>`<option value="${i}" ${String(i)===state.month?'selected':''}>${cap(MESES[i])}</option>`).join('');
+  if(state.month&&!present.has(+state.month))state.month='';
+}
+function renderList(shown,total){
+  const el=$('#list');
+  if(!shown.length){
+    el.innerHTML=`<div class="empty"><b>${total?'Ningún partido con estos filtros':'Todavía no hay partidos en '+state.season}</b>${total?'Prueba a quitar algún filtro.':'Pulsa «Añadir partido» para registrar el primero.'}</div>`;return;
+  }
+  const groups=new Map();
+  shown.forEach(m=>{const d=new Date(m.fecha+'T00:00:00');const k=d.getFullYear()+'-'+String(d.getMonth()).padStart(2,'0');if(!groups.has(k))groups.set(k,{d,items:[]});groups.get(k).items.push(m);});
+  el.innerHTML=[...groups.values()].map(g=>`
+    <div class="month"><h2>${MESES[g.d.getMonth()]} ${g.d.getFullYear()} <span class="num">${g.items.length} ${g.items.length===1?'partido':'partidos'}</span></h2>
+    <div class="rows">${g.items.map(rowHTML).join('')}</div></div>`).join('');
+}
+function rowHTML(m){
+  const d=new Date(m.fecha+'T00:00:00');
+  const hasScore=m.gl!=null&&m.gv!=null&&m.gl!==''&&m.gv!=='';
+  const meta=[`<span class="comp" style="--c:${colorOf(m.competicion)}"><i></i>${esc(m.competicion)}${m.jornada?' · '+esc(m.jornada):''}</span>`];
+  if(m.fecha>today())meta.push('<span class="next">Próximo</span>');
+  if(m.hora)meta.push(`<span class="num">${esc(m.hora)} h</span>`);
+  if(m.sede)meta.push(`<span>${esc(m.sede)}</span>`);
+  if(m.puesto)meta.push(`<span>${esc(m.puesto)}</span>`);
+  if(m.notas)meta.push(`<span class="note">${esc(m.notas)}</span>`);
+  return `<div class="row" style="--c:${colorOf(m.competicion)}" data-id="${m.id}">
+    <div class="date"><b class="num">${d.getDate()}</b><span>${DIAS[d.getDay()]}</span></div>
+    <div class="match">
+      <div class="score"><button class="t" data-team="${esc(m.local)}">${esc(m.local)}</button>${m.visitante?`<span class="r num ${hasScore?'':'na'}">${hasScore?m.gl+'–'+m.gv:'vs'}</span><button class="t" data-team="${esc(m.visitante)}">${esc(m.visitante)}</button>`:''}</div>
+      <div class="meta">${meta.join('')}</div>
+    </div>
+    <div class="acts"><button class="btn small" data-edit="${m.id}">Editar</button></div>
+  </div>`;
+}
+function renderChart(shown){
+  const counts=new Array(12).fill(0);
+  shown.forEach(m=>counts[new Date(m.fecha+'T00:00:00').getMonth()]++);
+  const W=272,H=110,pad=4,bw=18,gap=(W-12*bw)/11,max=Math.max(1,...counts),plotH=H-26;
+  let bars='',labels='';
+  SEASON_ORDER.forEach((mi,i)=>{
+    const x=i*(bw+gap),h=counts[mi]?Math.max(4,counts[mi]/max*(plotH-pad)):0,y=plotH-h;
+    bars+=`<rect class="hit" x="${x-gap/2}" y="0" width="${bw+gap}" height="${H}" data-m="${mi}" data-n="${counts[mi]}"></rect>`;
+    bars+=counts[mi]?`<rect class="bar" x="${x}" y="${y}" width="${bw}" height="${h}"></rect>`:`<rect class="bar dim" x="${x}" y="${plotH-3}" width="${bw}" height="3"></rect>`;
+    if(counts[mi])labels+=`<text class="val num" x="${x+bw/2}" y="${y-4}" text-anchor="middle">${counts[mi]}</text>`;
+    labels+=`<text x="${x+bw/2}" y="${H-4}" text-anchor="middle">${MES3[mi]}</text>`;
+  });
+  $('#chart').innerHTML=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-label="Partidos por mes"><line class="base" x1="0" x2="${W}" y1="${plotH}" y2="${plotH}"></line>${bars}${labels}</svg><div class="tip"></div>`;
+}
+function renderTeams(shown){
+  const c={};shown.forEach(m=>{c[m.local]=(c[m.local]||0)+1;if(m.visitante)c[m.visitante]=(c[m.visitante]||0)+1;});
+  const top=Object.entries(c).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0])).slice(0,8);
+  const max=top[0]?top[0][1]:1;
+  $('#teams').innerHTML=top.length?top.map(([t,n])=>`<li><button data-team="${esc(t)}" title="Filtrar por ${esc(t)}">${esc(t)}</button><span class="bar" style="width:${Math.round(n/max*60)}px"></span><span class="cnt num">${n}</span></li>`).join(''):'<li style="color:var(--ink-3)">Sin datos</li>';
+}
+function renderDatalists(){
+  const teams=new Set(TEAMS_SEED);matches.forEach(m=>{teams.add(m.local);if(m.visitante)teams.add(m.visitante);});
+  $('#teamList').innerHTML=[...teams].sort().map(t=>`<option value="${esc(t)}">`).join('');
+  const comps=new Set(COMP_KNOWN);matches.forEach(m=>comps.add(m.competicion));
+  $('#compList').innerHTML=[...comps].map(t=>`<option value="${esc(t)}">`).join('');
+  $('#sedeList').innerHTML=[...new Set(matches.map(m=>m.sede).filter(Boolean))].sort().map(t=>`<option value="${esc(t)}">`).join('');
+  $('#puestoList').innerHTML=[...new Set(matches.map(m=>m.puesto).filter(Boolean))].sort().map(t=>`<option value="${esc(t)}">`).join('');
+}
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+
+/* ---------- interacción ---------- */
+$('#season').addEventListener('change',e=>{state.season=e.target.value;state.month='';render();});
+$('#compChips').addEventListener('click',e=>{const b=e.target.closest('[data-comp]');if(!b)return;const c=b.dataset.comp;state.comps.has(c)?state.comps.delete(c):state.comps.add(c);render();});
+$('#monthSel').addEventListener('change',e=>{state.month=e.target.value;render();});
+$('#teamQ').addEventListener('input',e=>{state.team=e.target.value;render();});
+$('#clearBtn').addEventListener('click',()=>{state.comps.clear();state.month='';state.team='';$('#teamQ').value='';render();});
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-team]');
+  if(t){state.team=t.dataset.team;$('#teamQ').value=state.team;render();window.scrollTo({top:0,behavior:'smooth'});return;}
+  const ed=e.target.closest('[data-edit]');
+  if(ed)openForm(matches.find(m=>m.id===ed.dataset.edit));
+});
+$('#chart').addEventListener('mousemove',e=>{
+  const hit=e.target.closest('.hit');const tip=$('#chart .tip');
+  if(!hit){tip.style.display='none';return;}
+  const r=$('#chart').getBoundingClientRect();
+  tip.textContent=`${cap(MESES[+hit.dataset.m])}: ${hit.dataset.n} ${hit.dataset.n==='1'?'partido':'partidos'}`;
+  tip.style.display='block';tip.style.left=(e.clientX-r.left)+'px';tip.style.top=(e.clientY-r.top-6)+'px';
+});
+$('#chart').addEventListener('mouseleave',()=>{$('#chart .tip').style.display='none';});
+$('#chart').addEventListener('click',e=>{const hit=e.target.closest('.hit');if(!hit||hit.dataset.n==='0')return;state.month=state.month===hit.dataset.m?'':hit.dataset.m;render();});
+
+/* ---------- formulario ---------- */
+const dlg=$('#dlg');let editing=null;
+function openForm(m){
+  editing=m||null;
+  $('#dlgTitle').textContent=m?'Editar partido':'Nuevo partido';
+  $('#delBtn').hidden=!m;
+  $('#err').classList.remove('show');
+  $('#fFecha').value=m?.fecha||'';$('#fHora').value=m?.hora||'';$('#fComp').value=m?.competicion||'';$('#fJornada').value=m?.jornada||'';
+  $('#fLocal').value=m?.local||'';$('#fVisit').value=m?.visitante||'';$('#fGL').value=m?.gl??'';$('#fGV').value=m?.gv??'';
+  $('#fSede').value=m?.sede||'';$('#fPuesto').value=m?.puesto||'';$('#fNotas').value=m?.notas||'';
+  dlg.showModal();$('#fFecha').focus();
+}
+$('#addBtn').addEventListener('click',()=>openForm());
+$('#closeBtn').addEventListener('click',()=>dlg.close());
+$('#form').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const fecha=$('#fFecha').value,comp=$('#fComp').value.trim(),local=$('#fLocal').value.trim(),visit=$('#fVisit').value.trim();
+  const err=$('#err');
+  if(!fecha||!comp||!local){err.textContent='Faltan datos: fecha, competición y local son obligatorios.';err.classList.add('show');return;}
+  const gl=$('#fGL').value,gv=$('#fGV').value;
+  const m={id:editing?.id||uid(),fecha,hora:$('#fHora').value||'',competicion:comp,jornada:$('#fJornada').value.trim(),local,visitante:visit,
+    gl:gl===''?null:+gl,gv:gv===''?null:+gv,sede:$('#fSede').value.trim(),puesto:$('#fPuesto').value.trim(),notas:$('#fNotas').value.trim(),temporada:seasonOf(fecha),
+    creado:editing?.creado||new Date().toISOString()};
+  $('#saveBtn').disabled=true;
+  try{await store.put(m);dlg.close();toast(editing?'Partido actualizado':'Partido guardado');if(m.temporada!==state.season){state.season=m.temporada;render();}}
+  catch(ex){err.textContent='No se pudo guardar ('+(ex.code||ex.message||'error')+'). Inténtalo de nuevo.';err.classList.add('show');}
+  finally{$('#saveBtn').disabled=false;}
+});
+$('#delBtn').addEventListener('click',async()=>{
+  if(!editing||!confirm(`¿Eliminar ${editing.local} – ${editing.visitante} del ${editing.fecha}?`))return;
+  try{await store.del(editing.id);dlg.close();toast('Partido eliminado');}catch(ex){toast('No se pudo eliminar');}
+});
+$('#exportBtn').addEventListener('click',async()=>{
+  if(!downloads)return;
+  const rows=matches.filter(m=>m.temporada===state.season).sort((a,b)=>a.fecha.localeCompare(b.fecha));
+  const csv=[['fecha','hora','competicion','jornada','local','goles_local','goles_visitante','visitante','sede','puesto','notas']]
+    .concat(rows.map(m=>[m.fecha,m.hora,m.competicion,m.jornada,m.local,m.gl??'',m.gv??'',m.visitante,m.sede,m.puesto,m.notas]))
+    .map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(';')).join('\r\n');
+  try{await downloads.save({filename:`partidos-${state.season.replace('/','-')}.csv`,data:'﻿'+csv});}catch(ex){if(ex.code!=='declined')toast('No se pudo descargar');}
+});
+$('#refreshBtn').addEventListener('click',async()=>{
+  const pend=pendingResults();if(!pend.length)return;
+  const txt='Actualiza en el Cuaderno del Operador el resultado de estos partidos ya jugados (busca marcador, hora y estadio):\n'+pend.map(m=>`${m.fecha} ${m.competicion}: ${m.local} - ${m.visitante}`).join('\n');
+  try{await navigator.clipboard.writeText(txt);toast(`Lista de ${pend.length} partido${pend.length===1?'':'s'} copiada. Pégala en el chat con Claude.`);}
+  catch(e){prompt('Copia este texto y pégalo en el chat con Claude:',txt);}
+});
+let toastT;function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove('show'),2200);}
+/* ---------- arranque ---------- */
+localStore.load();
+(async()=>{
+  const cap=await window.claude?.use?.('db');
+  if(!cap){setStatus('Guardado solo en este navegador',false);return;}
+  db=cap;
+  const col=db.collection('partidos');
+  store={
+    async put(m){await col.doc(m.id).set(m);},
+    async del(id){await col.doc(id).delete();}
+  };
+  col.onSnapshot(snap=>{
+    matches=snap.docs.filter(d=>d.exists).map(d=>({id:d.id,...d.data()}));
+    setStatus(snap.metadata.fromCache?'Sincronizando…':'Guardado en la nube',!snap.metadata.fromCache);
+    render();
+  },err=>{setStatus('Sin conexión con la base de datos',false);console.error(err);});
+})();
+(async()=>{
+  downloads=await window.claude?.use?.('downloads');
+  if(downloads)$('#exportBtn').hidden=false;
+})();
+
+document.addEventListener('keydown',e=>{if(e.key==='n'&&!dlg.open&&!/input|textarea|select/i.test(e.target.tagName))openForm();});
+})();
+</script>
+
+</body></html>
