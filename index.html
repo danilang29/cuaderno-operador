@@ -1,4 +1,17 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found]){display:none!important}</style></head><body>
+  <!-- PANTALLA DE BLOQUEO POR PIN -->
+<div id="bloqueo-seguridad" style="position: fixed; inset: 0; background: #121212; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-family: system-ui, sans-serif;">
+  <div style="background: #1e1e1e; padding: 2rem; border-radius: 12px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+    <h2 style="margin-top: 0;">🔒 Cuaderno Privado</h2>
+    <p style="color: #aaa; margin-bottom: 1.5rem;">Introduce tu PIN de acceso</p>
+    
+    <input type="password" id="input-pin" placeholder="****" style="padding: 12px; font-size: 1.2rem; text-align: center; width: 120px; border-radius: 6px; border: 1px solid #333; background: #2a2a2a; color: white; margin-bottom: 1rem; letter-spacing: 5px;">
+    <br>
+    <button onclick="desbloquearApp()" style="padding: 12px 24px; font-size: 1rem; background: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%;">Entrar</button>
+    
+    <p id="error-pin" style="color: #ef4444; margin-top: 1rem; display: none; font-size: 0.9rem;">❌ PIN incorrecto</p>
+  </div>
+</div>
 <title>Cuaderno del Operador</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
@@ -260,6 +273,36 @@ dialog::backdrop{background:rgba(10,20,14,.5)}
 <div class="toast" id="toast"></div>
 
 <script>
+  // --- SISTEMA DE PIN ---
+const PIN_SECRETO = "2919"; // <-- CAMBIA ESTE NÚMERO POR TU CLAVE REAL
+
+function desbloquearApp() {
+  const intento = document.getElementById("input-pin").value;
+  
+  if (intento === PIN_SECRETO) {
+    // Si es correcto, ocultamos el telón negro
+    document.getElementById("bloqueo-seguridad").style.display = "none";
+    // Guardamos en la sesión que ya está logueado para que no lo pida al recargar la página
+    sessionStorage.setItem("acceso_concedido", "true");
+  } else {
+    // Si falla, mostramos el error y limpiamos el input
+    document.getElementById("error-pin").style.display = "block";
+    document.getElementById("input-pin").value = "";
+  }
+}
+
+// Comprueba si ya nos habíamos logueado en esta misma pestaña antes de recargar
+if (sessionStorage.getItem("acceso_concedido") === "true") {
+  document.getElementById("bloqueo-seguridad").style.display = "none";
+}
+
+// Permitir pulsar "Enter" en el teclado para acceder
+document.getElementById("input-pin").addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    desbloquearApp();
+  }
+});
+// ----------------------
 (function(){
 'use strict';
 const $=s=>document.querySelector(s);
